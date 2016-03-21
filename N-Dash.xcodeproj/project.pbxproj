@@ -517,7 +517,7 @@
 				INFOPLIST_FILE = "N-Dash/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "stimpsoft.N-Dash";
+				PRODUCT_BUNDLE_IDENTIFIER = "frobble.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -530,7 +530,7 @@
 				INFOPLIST_FILE = "N-Dash/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "stimpsoft.N-Dash";
+				PRODUCT_BUNDLE_IDENTIFIER = "frobble.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -62,6 +62,8 @@
 - (NSString *)timeUntilDateFormatted:(NSDate *)date;
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
 
+@property (nonatomic) BOOL                                  BOOGEYMODE;
+@property (nonatomic) double                                BOOGEYSPEED;
 
 @property (nonatomic, strong) CLLocationManager             *locationManager;
 @property (nonatomic, strong) CLLocation                    *currentLocation;
@@ -127,17 +129,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    for(NSString *fontfamilyname in [UIFont familyNames])
-    {
-        NSLog(@"Family:'%@'",fontfamilyname);
-        for(NSString *fontName in [UIFont fontNamesForFamilyName:fontfamilyname])
-        {
-            NSLog(@"\tfont:'%@'",fontName);
-        }
-        NSLog(@"~~~~~~~~");
-    }
-    
+    _BOOGEYMODE                         = NO;
+    _BOOGEYSPEED                        = 29.77286;
     
     _LEDFont                            = @"Digital-7";
     _LabelFont                          = @"Highway Gothic Narrow";
@@ -345,6 +338,7 @@
 #pragma mark View Controller methods
 
 - (IBAction)OpenPreferencesView:(id)sender {
+    [self savePreferences];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     UIViewController *viewController =
     [[UIStoryboard storyboardWithName:@"Main"
@@ -356,6 +350,7 @@
 
 - (IBAction)CenterMapButtonClicked:(id)sender {
     [self centerMapView:[self mapViewZoomLevelLatitude] longitudeSpan:[self mapViewZoomLevelLatitude]];
+    [self savePreferences];
 }
 
 
@@ -542,6 +537,7 @@
     }
     
     if (speed < 0)  speed = 0;
+    if (_BOOGEYMODE) speed = [self convertMetersPerSecondToSpeed:_BOOGEYSPEED];
     
     NSArray *si = [[NSString stringWithFormat:@"%.1f", speed] componentsSeparatedByString:@"."];
     
@@ -1302,7 +1298,6 @@
         exit(0);
     }  else if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways) {
         //always called when launched.
-        [_locationManager startUpdatingLocation];
         if ([CLLocationManager headingAvailable]) {
             _locationManager.headingFilter = _headingAccuracy;
             [_locationManager startUpdatingHeading];
@@ -1318,6 +1313,7 @@
             }
         }
         [self centerMapView:_currentLocation.coordinate.latitude longitudeSpan:_currentLocation.coordinate.longitude];
+        [self getCurrentLocationName];
         [self initWeatherService];
         [self setSunLabel];
     }
@@ -1344,8 +1340,6 @@
     _currentTemperature = _weatherService.celsius;
     [self setTempButtonLabel:_currentTemperature];
     [_weatherService updateLocation:_currentLocation andUpdateImmediately:NO];
-    //called evvery 60 seconds, so hey, save prefs here
-    [self savePreferences];
 }
 
 - (void)weatherService:(WeatherService *)service stationLocationDidChange:(CLLocation *)newLocation
