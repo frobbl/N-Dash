@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52DD98CA1CA05658001C66C4 /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C21CA05658001C66C4 /* center.png */; };
+		52DD98CE1CA05658001C66C4 /* prefs_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C61CA05658001C66C4 /* prefs_green.png */; };
+		52DD98D01CA05658001C66C4 /* prefs_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C81CA05658001C66C4 /* prefs_white.png */; };
+		52DD98D11CA05658001C66C4 /* prefs.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C91CA05658001C66C4 /* prefs.png */; };
+		52DD98D41CA0566B001C66C4 /* warning.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D31CA0566B001C66C4 /* warning.wav */; };
+		52DD98D61CA06068001C66C4 /* HWYGNRRW.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */; };
 		52E40FB71CA05348003591D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB61CA05348003591D8 /* main.m */; };
 		52E40FBA1CA05348003591D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB91CA05348003591D8 /* AppDelegate.m */; };
 		52E40FBD1CA05348003591D8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FBC1CA05348003591D8 /* ViewController.m */; };
@@ -15,6 +21,14 @@
 		52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */; };
 		52E40FD01CA05348003591D8 /* N_DashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FCF1CA05348003591D8 /* N_DashTests.m */; };
 		52E40FDB1CA05348003591D8 /* N_DashUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FDA1CA05348003591D8 /* N_DashUITests.m */; };
+		52E40FEA1CA05406003591D8 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FE91CA05406003591D8 /* AppIcon.appiconset */; };
+		52E40FEE1CA05428003591D8 /* Clearview.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FEC1CA05428003591D8 /* Clearview.ttf */; };
+		52E40FEF1CA05428003591D8 /* Digital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FED1CA05428003591D8 /* Digital.ttf */; };
+		52E40FF11CA0543E003591D8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40FF01CA0543E003591D8 /* MapKit.framework */; };
+		52E40FFA1CA05501003591D8 /* EDSunriseSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FF31CA05501003591D8 /* EDSunriseSet.m */; };
+		52E40FFB1CA05501003591D8 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FF51CA05501003591D8 /* PreferencesViewController.m */; };
+		52E40FFC1CA05501003591D8 /* Spectrum.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FF71CA05501003591D8 /* Spectrum.m */; };
+		52E40FFD1CA05501003591D8 /* WeatherService.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FF91CA05501003591D8 /* WeatherService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52DD98C21CA05658001C66C4 /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
+		52DD98C61CA05658001C66C4 /* prefs_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_green.png; sourceTree = "<group>"; };
+		52DD98C81CA05658001C66C4 /* prefs_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_white.png; sourceTree = "<group>"; };
+		52DD98C91CA05658001C66C4 /* prefs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs.png; sourceTree = "<group>"; };
+		52DD98D31CA0566B001C66C4 /* warning.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = warning.wav; sourceTree = "<group>"; };
+		52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = HWYGNRRW.TTF; sourceTree = "<group>"; };
 		52E40FB21CA05348003591D8 /* N-Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "N-Dash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40FB61CA05348003591D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		52E40FB81CA05348003591D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +71,18 @@
 		52E40FD61CA05348003591D8 /* N-DashUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "N-DashUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40FDA1CA05348003591D8 /* N_DashUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = N_DashUITests.m; sourceTree = "<group>"; };
 		52E40FDC1CA05348003591D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52E40FE91CA05406003591D8 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
+		52E40FEC1CA05428003591D8 /* Clearview.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Clearview.ttf; sourceTree = "<group>"; };
+		52E40FED1CA05428003591D8 /* Digital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Digital.ttf; sourceTree = "<group>"; };
+		52E40FF01CA0543E003591D8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		52E40FF21CA05501003591D8 /* EDSunriseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSunriseSet.h; sourceTree = "<group>"; };
+		52E40FF31CA05501003591D8 /* EDSunriseSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDSunriseSet.m; sourceTree = "<group>"; };
+		52E40FF41CA05501003591D8 /* PreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
+		52E40FF51CA05501003591D8 /* PreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
+		52E40FF61CA05501003591D8 /* Spectrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spectrum.h; sourceTree = "<group>"; };
+		52E40FF71CA05501003591D8 /* Spectrum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spectrum.m; sourceTree = "<group>"; };
+		52E40FF81CA05501003591D8 /* WeatherService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherService.h; sourceTree = "<group>"; };
+		52E40FF91CA05501003591D8 /* WeatherService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52E40FF11CA0543E003591D8 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,9 +111,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52DD98C11CA0563A001C66C4 /* IMAGES */ = {
+			isa = PBXGroup;
+			children = (
+				52DD98C21CA05658001C66C4 /* center.png */,
+				52DD98C61CA05658001C66C4 /* prefs_green.png */,
+				52DD98C81CA05658001C66C4 /* prefs_white.png */,
+				52DD98C91CA05658001C66C4 /* prefs.png */,
+			);
+			name = IMAGES;
+			sourceTree = "<group>";
+		};
+		52DD98D21CA0565E001C66C4 /* AUDIO */ = {
+			isa = PBXGroup;
+			children = (
+				52DD98D31CA0566B001C66C4 /* warning.wav */,
+			);
+			name = AUDIO;
+			sourceTree = "<group>";
+		};
 		52E40FA91CA05348003591D8 = {
 			isa = PBXGroup;
 			children = (
+				52E40FF01CA0543E003591D8 /* MapKit.framework */,
 				52E40FB41CA05348003591D8 /* N-Dash */,
 				52E40FCE1CA05348003591D8 /* N-DashTests */,
 				52E40FD91CA05348003591D8 /* N-DashUITests */,
@@ -105,6 +158,15 @@
 				52E40FB91CA05348003591D8 /* AppDelegate.m */,
 				52E40FBB1CA05348003591D8 /* ViewController.h */,
 				52E40FBC1CA05348003591D8 /* ViewController.m */,
+				52E40FF41CA05501003591D8 /* PreferencesViewController.h */,
+				52E40FF51CA05501003591D8 /* PreferencesViewController.m */,
+				52E40FF21CA05501003591D8 /* EDSunriseSet.h */,
+				52E40FF31CA05501003591D8 /* EDSunriseSet.m */,
+				52E40FF61CA05501003591D8 /* Spectrum.h */,
+				52E40FF71CA05501003591D8 /* Spectrum.m */,
+				52E40FF81CA05501003591D8 /* WeatherService.h */,
+				52E40FF91CA05501003591D8 /* WeatherService.m */,
+				52E40FE81CA053E0003591D8 /* Resources */,
 				52E40FBE1CA05348003591D8 /* Main.storyboard */,
 				52E40FC11CA05348003591D8 /* Assets.xcassets */,
 				52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */,
@@ -138,6 +200,27 @@
 				52E40FDC1CA05348003591D8 /* Info.plist */,
 			);
 			path = "N-DashUITests";
+			sourceTree = "<group>";
+		};
+		52E40FE81CA053E0003591D8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				52DD98D21CA0565E001C66C4 /* AUDIO */,
+				52DD98C11CA0563A001C66C4 /* IMAGES */,
+				52E40FEB1CA05418003591D8 /* FONTS */,
+				52E40FE91CA05406003591D8 /* AppIcon.appiconset */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		52E40FEB1CA05418003591D8 /* FONTS */ = {
+			isa = PBXGroup;
+			children = (
+				52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */,
+				52E40FEC1CA05428003591D8 /* Clearview.ttf */,
+				52E40FED1CA05428003591D8 /* Digital.ttf */,
+			);
+			name = FONTS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +290,12 @@
 				TargetAttributes = {
 					52E40FB11CA05348003591D8 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 37VX9KSYDJ;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					52E40FCA1CA05348003591D8 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -243,9 +332,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52DD98D61CA06068001C66C4 /* HWYGNRRW.TTF in Resources */,
+				52DD98CE1CA05658001C66C4 /* prefs_green.png in Resources */,
+				52DD98D41CA0566B001C66C4 /* warning.wav in Resources */,
+				52E40FEA1CA05406003591D8 /* AppIcon.appiconset in Resources */,
+				52DD98D01CA05658001C66C4 /* prefs_white.png in Resources */,
 				52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */,
+				52DD98D11CA05658001C66C4 /* prefs.png in Resources */,
 				52E40FC21CA05348003591D8 /* Assets.xcassets in Resources */,
+				52E40FEE1CA05428003591D8 /* Clearview.ttf in Resources */,
 				52E40FC01CA05348003591D8 /* Main.storyboard in Resources */,
+				52DD98CA1CA05658001C66C4 /* center.png in Resources */,
+				52E40FEF1CA05428003591D8 /* Digital.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,9 +368,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52E40FFC1CA05501003591D8 /* Spectrum.m in Sources */,
 				52E40FBD1CA05348003591D8 /* ViewController.m in Sources */,
 				52E40FBA1CA05348003591D8 /* AppDelegate.m in Sources */,
+				52E40FFD1CA05501003591D8 /* WeatherService.m in Sources */,
+				52E40FFB1CA05501003591D8 /* PreferencesViewController.m in Sources */,
 				52E40FB71CA05348003591D8 /* main.m in Sources */,
+				52E40FFA1CA05501003591D8 /* EDSunriseSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +513,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "N-Dash/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "stimpsoft.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -422,7 +526,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "N-Dash/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "stimpsoft.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -496,6 +602,7 @@
 				52E40FE11CA05348003591D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52E40FE21CA05348003591D8 /* Build configuration list for PBXNativeTarget "N-DashTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +611,7 @@
 				52E40FE41CA05348003591D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52E40FE51CA05348003591D8 /* Build configuration list for PBXNativeTarget "N-DashUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +620,7 @@
 				52E40FE71CA05348003591D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,25 +1,286 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Digital.ttf">
+            <string>Digital-7MonoItalic</string>
+            <string>Digital-7MonoItalic</string>
+        </mutableArray>
+        <mutableArray key="HWYGNRRW.TTF">
+            <string>HighwayGothicNarrow</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Kw-WT-V3M">
+                                <rect key="frame" x="20" y="308" width="335" height="335"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMx-Sk-6d8">
+                                <rect key="frame" x="20" y="210" width="184" height="30"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
+                                <state key="normal" title="Altitude"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFm-PJ-i0a">
+                                <rect key="frame" x="20" y="249" width="100" height="46"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="44"/>
+                                <state key="normal" title="100º"/>
+                                <connections>
+                                    <action selector="TemperatureButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gCW-ow-3ee"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N5e-df-trW">
+                                <rect key="frame" x="128" y="249" width="227" height="46"/>
+                                <fontDescription key="fontDescription" name="HighwayGothicNarrow" family="Highway Gothic Narrow" pointSize="44"/>
+                                <state key="normal" title="Time"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdy-wn-wFo">
+                                <rect key="frame" x="212" y="210" width="143" height="30"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
+                                <state key="normal" title="Heading"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time Left Until Sunset (7:45 am)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27y-r0-MQm">
+                                <rect key="frame" x="20" y="615" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5G-zh-7Fl">
+                                <rect key="frame" x="22" y="590" width="330" height="23"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <state key="normal" title="Location">
+                                    <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXK-MN-4j5">
+                                <rect key="frame" x="116" y="133" width="239" height="30"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="28"/>
+                                <state key="normal" title="TripA"/>
+                                <connections>
+                                    <action selector="OdomterButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="agf-sc-9t1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7c-Oe-FJ2">
+                                <rect key="frame" x="142" y="169" width="213" height="30"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="28"/>
+                                <state key="normal" title="DirectDistance"/>
+                                <connections>
+                                    <action selector="DirectDistanceButttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="luR-K3-tPs"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNS-6l-q7o">
+                                <rect key="frame" x="22" y="169" width="112" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2a-jx-8YS">
+                                <rect key="frame" x="20" y="25" width="16" height="16"/>
+                                <state key="normal" image="prefs_green.png">
+                                    <color key="titleColor" red="0.088397838069999998" green="0.40853236180000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="OpenPreferencesView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R8G-80-HBC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1h-Mf-p53">
+                                <rect key="frame" x="330" y="309" width="24" height="24"/>
+                                <state key="normal" image="center.png">
+                                    <color key="titleColor" red="0.088397838069999998" green="0.40853236180000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="CenterMapButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s1S-yJ-wq2"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MPH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQh-ov-6pb">
+                                <rect key="frame" x="298" y="98" width="56" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZ6-hS-wWt">
+                                <rect key="frame" x="300" y="20" width="54" height="66"/>
+                                <fontDescription key="fontDescription" name="Digital-7MonoItalic" family="Digital-7" pointSize="72"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KWE-O6-x16">
+                                <rect key="frame" x="47" y="26" width="251" height="102"/>
+                                <fontDescription key="fontDescription" name="Digital-7MonoItalic" family="Digital-7" pointSize="141"/>
+                                <state key="normal" title="999"/>
+                                <connections>
+                                    <action selector="SpeedButtonClicked:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SO7-Zd-BDH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xra-AM-qGT" userLabel="TripButton">
+                                <rect key="frame" x="20" y="133" width="78" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Trip A:">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="TripButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="auJ-vI-0kF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="AltitudeButton" destination="BMx-Sk-6d8" id="AlS-ok-ehS"/>
+                        <outlet property="ClockButton" destination="N5e-df-trW" id="hgv-MQ-nLe"/>
+                        <outlet property="DirectDistanceButton" destination="o7c-Oe-FJ2" id="F4F-UC-7eb"/>
+                        <outlet property="DirectDistanceLabel" destination="lNS-6l-q7o" id="veH-Li-fKG"/>
+                        <outlet property="HeadingButton" destination="Sdy-wn-wFo" id="T8q-E5-Z2o"/>
+                        <outlet property="LocationButton" destination="c5G-zh-7Fl" id="V70-YR-vqp"/>
+                        <outlet property="MapView" destination="8Kw-WT-V3M" id="bda-Hu-ljU"/>
+                        <outlet property="OdometerButton" destination="LXK-MN-4j5" id="x9f-7U-Esy"/>
+                        <outlet property="OdometerLabel" destination="xra-AM-qGT" id="WIS-S1-Khz"/>
+                        <outlet property="SpeedButton" destination="KWE-O6-x16" id="Xba-dF-Wnf"/>
+                        <outlet property="SpeedFractionLabel" destination="vZ6-hS-wWt" id="tiS-kG-IJh"/>
+                        <outlet property="SpeedUnitsLabel" destination="qQh-ov-6pb" id="bRe-Zj-oNN"/>
+                        <outlet property="SunLabel" destination="27y-r0-MQm" id="UYn-W0-cH8"/>
+                        <outlet property="TempButton" destination="ZFm-PJ-i0a" id="9MD-nr-Ysx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="72.5" y="357.5"/>
+        </scene>
+        <!--PreferencesViewController-->
+        <scene sceneID="Xft-79-hGh">
+            <objects>
+                <viewController storyboardIdentifier="PreferencesViewController" title="PreferencesViewController" id="F6C-8i-sm9" customClass="PreferencesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fyM-B8-1AS"/>
+                        <viewControllerLayoutGuide type="bottom" id="SzZ-L1-ePm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZLv-BC-e5a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oA3-TC-CMa">
+                                <rect key="frame" x="103" y="114" width="51" height="31"/>
+                                <connections>
+                                    <action selector="AlarmSwitchDidChange:" destination="F6C-8i-sm9" eventType="valueChanged" id="U6D-hK-gNa"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound alarm on excess speed:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sog-sU-b13">
+                                <rect key="frame" x="20" y="84" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Speed and distance units:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D4u-fF-xhU">
+                                <rect key="frame" x="20" y="174" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Knots" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aVa-mc-h8H">
+                                <rect key="frame" x="222" y="113" width="55" height="31"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="90" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wgi-3Q-Qum">
+                                <rect key="frame" x="160" y="114" width="54" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-Vs-4t1">
+                                <rect key="frame" x="38" y="204" width="299" height="29"/>
+                                <segments>
+                                    <segment title="Miles"/>
+                                    <segment title="Kilometers"/>
+                                    <segment title="Nautical Miles"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="DistanceUnitsClickerClicked:" destination="F6C-8i-sm9" eventType="valueChanged" id="qMI-4b-iiZ"/>
+                                </connections>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cZ-jY-fFI">
+                                <rect key="frame" x="67" y="403" width="242" height="29"/>
+                                <segments>
+                                    <segment title="1 Minutes"/>
+                                    <segment title="5 Minutes"/>
+                                    <segment title="10 Minutes"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="TemperatureRefreshClickerClicked:" destination="F6C-8i-sm9" eventType="valueChanged" id="mBD-Bm-LUT"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temperature units:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Haj-yJ-6Ha">
+                                <rect key="frame" x="20" y="284" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temperature refresh:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehc-ye-TiL">
+                                <rect key="frame" x="20" y="372" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iMf-WP-wSk">
+                                <rect key="frame" x="93" y="314" width="189" height="29"/>
+                                <segments>
+                                    <segment title="Fahrenheit"/>
+                                    <segment title="Celsius"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="TemperatureUnitsClickerClicked:" destination="F6C-8i-sm9" eventType="valueChanged" id="O86-qd-Jxr"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qsy-MX-NBz">
+                                <rect key="frame" x="19" y="14" width="60" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="&lt; Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="SavePreferences:" destination="F6C-8i-sm9" eventType="touchUpInside" id="6H5-Gy-M8q"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="AlertOnSpeedSwitch" destination="oA3-TC-CMa" id="t3u-9x-jxA"/>
+                        <outlet property="DistanceUnitsSelector" destination="vFF-Vs-4t1" id="fOQ-mT-VQS"/>
+                        <outlet property="SpeedLimitLabelField" destination="aVa-mc-h8H" id="M89-hf-H1c"/>
+                        <outlet property="SpeedLimitTextField" destination="wgi-3Q-Qum" id="SuD-Go-Q6L"/>
+                        <outlet property="TempUnitsSelector" destination="iMf-WP-wSk" id="ADA-fX-JYU"/>
+                        <outlet property="WeatherRefreshSelector" destination="6cZ-jY-fFI" id="c28-Rd-OlP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X7j-dW-uqs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="474.5" y="357.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="center.png" width="128" height="128"/>
+        <image name="prefs_green.png" width="128" height="126"/>
+    </resources>
 </document>
