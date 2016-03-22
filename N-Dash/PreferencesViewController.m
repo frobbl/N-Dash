@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl     *DistanceUnitsSelector;
 @property (weak, nonatomic) IBOutlet UISegmentedControl     *TempUnitsSelector;
 @property (weak, nonatomic) IBOutlet UISegmentedControl     *WeatherRefreshSelector;
+@property (weak, nonatomic) IBOutlet UILabel                *AppVersionBuildLabel;
 
 @property (nonatomic) int                                   USERDEFweatherUpdatePeriod;         // 0 : never, 1: 1 min, 2: 5 min, 3 10 min.
 
@@ -41,28 +42,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /*
+    
     NSString *appNameString         = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
     NSString *appVersionString      = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *appBuildNumberString  = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentCenter;
-    UIFont *largeLabelFont = [UIFont systemFontOfSize:28];
+    UIFont *tinyLabelFont = [UIFont systemFontOfSize:10];
     
-    NSAttributedString *appLabelText = [[NSAttributedString alloc] initWithString: [NSString stringWithFormat:@"%@ v%@",appNameString, appVersionString]
-                                                                        attributes: @{NSParagraphStyleAttributeName :paragraphStyle,
-                                                                                    NSFontAttributeName: largeLabelFont}];
+    NSAttributedString *appLabelText = [[NSMutableAttributedString alloc] initWithString: [NSString stringWithFormat:@"%@ v%@ build %@",appNameString, appVersionString, appBuildNumberString]
+                                                                        attributes: @{NSParagraphStyleAttributeName:paragraphStyle,
+                                                                                    NSFontAttributeName: tinyLabelFont,
+                                                                                    NSForegroundColorAttributeName:[UIColor darkGrayColor]}];
+    _AppVersionBuildLabel.attributedText = appLabelText;
     
-     _AppTitleLabel.attributedText = appLabelText;
-    
-    UIFont *smallLabelFont = [UIFont systemFontOfSize:14];
-    NSAttributedString *buildLabelText = [[NSAttributedString alloc] initWithString: [NSString stringWithFormat:@"build %@",appBuildNumberString]
-                                                                       attributes: @{NSParagraphStyleAttributeName :paragraphStyle,
-                                                                                     NSFontAttributeName: smallLabelFont}];
-    
-    _AppBuildCodeLabel.attributedText = buildLabelText;
-     */
     
     _SpeedLimitTextField.delegate = self;
     [_SpeedLimitTextField setReturnKeyType:UIReturnKeyDone];
