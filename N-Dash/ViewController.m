@@ -568,7 +568,7 @@
     
     
     NSMutableAttributedString *unitString = [[NSMutableAttributedString alloc] initWithString:_UNITS_SPEED[_USERDEFDistanceUnitType]];
-    [unitString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18] range:NSMakeRange(0,[unitString length])];
+    [unitString addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:24] range:NSMakeRange(0,[unitString length])];
     [unitString addAttribute:NSForegroundColorAttributeName value:unitColor range:NSMakeRange(0,[unitString length])];
     
     _SpeedUnitsLabel.attributedText = unitString;
@@ -641,12 +641,12 @@
     if (altitude < -500) {
         altString = [[NSMutableString alloc] initWithString:@"---"];
         altText = [[NSMutableAttributedString alloc] initWithString:altString];
-        [altText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:24] range:NSMakeRange(0,[altString length])];
+        [altText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:NSMakeRange(0,[altString length])];
         [altText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[altString length])];
     } else {
         altString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"Altitude: %d%@", altitude, units]];
         altText = [[NSMutableAttributedString alloc] initWithString:altString];
-        [altText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:24] range:NSMakeRange(0,[altString length])];
+        [altText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:NSMakeRange(0,[altString length])];
         [altText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[altString length])];
     }
     [_AltitudeButton setAttributedTitle:altText forState:UIControlStateNormal];
@@ -663,13 +663,13 @@
         direction = @"";
         headString = [[NSMutableString alloc] initWithString:@"..."];
         headText = [[NSMutableAttributedString alloc] initWithString:headString];
-        [headText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LEDFont size:24] range:NSMakeRange(0,[headString length])];
+        [headText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LEDFont size:28] range:NSMakeRange(0,[headString length])];
         [headText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[headString length])];
     } else {
         direction = [self directionForHeading:heading];
         headString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%dº %@", heading, direction]];
         headText = [[NSMutableAttributedString alloc] initWithString:headString];
-        [headText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:24] range:NSMakeRange(0,[headString length])];
+        [headText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:NSMakeRange(0,[headString length])];
         [headText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[headString length])];
     }
     [_HeadingButton setAttributedTitle:headText forState:UIControlStateNormal];
@@ -1268,8 +1268,8 @@
     CLLocationDistance distanceBetween = [newLocation distanceFromLocation:oldLocation];
     
     if ([newLocation distanceFromLocation:_currentLocation] >= _odometerAccuracy ) {
-        _currentLocation = newLocation;
         
+        _currentLocation = newLocation;
         
         if (_odometerTripA < 9999999) {
             _odometerTripA += distanceBetween;
@@ -1314,10 +1314,13 @@
         exit(0);
     }  else if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways) {
         //always called when launched.
+        [_locationManager startUpdatingLocation];
+        
         if ([CLLocationManager headingAvailable]) {
             _locationManager.headingFilter = _headingAccuracy;
             [_locationManager startUpdatingHeading];
         }
+        
         if (_locationManager.location) {
             _currentLocation = _locationManager.location;
             if (_homeLocation == nil) {
@@ -1328,6 +1331,7 @@
                 [self setDirectDistanceButtonLabel:directDistance];
             }
         }
+        
         [self centerMapView:_currentLocation.coordinate.latitude longitudeSpan:_currentLocation.coordinate.longitude];
         [self getCurrentLocationName];
         [self initWeatherService];
