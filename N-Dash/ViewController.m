@@ -87,6 +87,7 @@
 
 @property (nonatomic) BOOL                                  USERDEFdropPinForWeatherStations;
 @property (nonatomic) int                                   USERDEFweatherUpdatePeriod; // 0 to 3. 0: never. 1: 1 min. 2, 5 min. 3: 10 min.
+@property (nonatomic) BOOL                                  USERDEFdisplayTemperatureInColor;
 
 @property (nonatomic) double                                currentMetersPerSecond;
 @property (nonatomic) double                                currentTemperature;
@@ -129,7 +130,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _BOOGEYMODE                         = NO;
+    _BOOGEYMODE                         = false;
     _BOOGEYSPEED                        = 29.77286;
     
     _LEDFont                            = @"Digital-7";
@@ -138,12 +139,13 @@
     _SansItalic                         = @"Helvetica-Italic";
     
     _UNITS_SPEED                        = @[@"MPH", @"KPH", @"Knots"];
-    _UNITS_DISTANCE                     = @[@"mi", @"k", @"nm"];
+    _UNITS_DISTANCE                     = @[@"Mi", @"K", @"NM"];
     _UNITS_TEMP                         = @[@"F", @"C"];
     
     _USERDEFdropPinForWeatherStations   = false;
     _USERDEFweatherUpdatePeriod         = 6;
     _currentTemperature                 = -9999.00;
+    _USERDEFdisplayTemperatureInColor   = false;
     
     _USERDEFspeedWarningThreshold       = [self convertSpeedToMetersPerSecond:90.000];
     _USERDEFplaySoundOnSpeedWarning     = false;
@@ -202,6 +204,10 @@
     
     if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
         _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"USERDEFTemperatureUnits"];
+    }
+    
+    if ([defaults boolForKey:@"USERDEFdisplayTemperatureInColor"]) {
+        _USERDEFdisplayTemperatureInColor = [defaults boolForKey:@"USERDEFdisplayTemperatureInColor"];
     }
     
     if ([defaults integerForKey:@"altitudeUnitsState"]) {
@@ -264,6 +270,7 @@
     [defaults setDouble:_odometerTripB forKey:@"odometerTripB"];
     [defaults setInteger:_USERDEFDistanceUnitType forKey:@"USERDEFDistanceUnitType"];
     [defaults setInteger:_USERDEFTemperatureUnits forKey:@"USERDEFTemperatureUnits"];
+    [defaults setBool:_USERDEFdisplayTemperatureInColor forKey:@"USERDEFdisplayTemperatureInColor"];
     [defaults setInteger:_altitudeUnitsState forKey:@"altitudeUnitsState"];
     [defaults setDouble:[self mapViewZoomLevelLatitude] forKey:@"mapViewZoomLevelLat"];
     [defaults setDouble:[self mapViewZoomLevelLongitude] forKey:@"mapViewZoomLevelLon"];
@@ -313,7 +320,7 @@
     _colors = [[Spectrum alloc] init];
     _defaultLabelColor = _colors.GoldenRod;
     _defaultSpeedColor = _colors.LEDGreen;
-    _speedWarningColor = _colors.BloodOrange;
+    _speedWarningColor = _colors.Crimson;
 }
 
 - (void)cleanInterface
@@ -583,23 +590,30 @@
 - (void)setTempButtonLabel:(double)celsius
 {
     int degrees = (int)(round([self temperatureForcelsius:celsius]));
+    UIColor *tempcolor;
     NSMutableString *tempString;
     NSMutableAttributedString *tempText;
     
     //NSLog(@"Setting temp: %d",degrees);
+    
+    if (_USERDEFdisplayTemperatureInColor) {
+        tempcolor = [self colorForTemperatureInFahrenheit:[self celsiusToFahrenheit:celsius]];
+    } else {
+        tempcolor = _defaultLabelColor;
+    }
     
     if (degrees < -999) {
         tempString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"--º%@", _UNITS_TEMP[_USERDEFTemperatureUnits]]];
         tempText = [[NSMutableAttributedString alloc] initWithString:tempString];
         [tempText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:44] range:[tempString rangeOfString:@"--º"]];
         [tempText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:32] range:[tempString rangeOfString:_UNITS_TEMP[_USERDEFTemperatureUnits]]];
-        [tempText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[tempString length])];
+        [tempText addAttribute:NSForegroundColorAttributeName value:tempcolor range:NSMakeRange(0,[tempString length])];
     } else {
         tempString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%dº%@", degrees, _UNITS_TEMP[_USERDEFTemperatureUnits]]];
         tempText = [[NSMutableAttributedString alloc] initWithString:tempString];
         [tempText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:44] range:[tempString rangeOfString:[NSString stringWithFormat:@"%d", degrees]]];
         [tempText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:32] range:[tempString rangeOfString:_UNITS_TEMP[_USERDEFTemperatureUnits]]];
-        [tempText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[tempString length])];
+        [tempText addAttribute:NSForegroundColorAttributeName value:tempcolor range:NSMakeRange(0,[tempString length])];
     }
     [_TempButton setAttributedTitle:tempText forState:UIControlStateNormal];
     _TempButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -953,6 +967,8 @@
 
 -(UIColor *)colorForTemperatureInFahrenheit:(int)temp
 {
+    // fahrenheit because im an american. sigh. fucking shitty ass public education system. thanks, republicans.
+    
     UIColor *tempColor;
     switch (temp)
     {
@@ -1005,7 +1021,7 @@
             break;
             
         default:
-            tempColor = _colors.White;
+            tempColor = _defaultLabelColor;
             break;
     }
     return tempColor;
