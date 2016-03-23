@@ -22,7 +22,6 @@
 		52E40FD01CA05348003591D8 /* N_DashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FCF1CA05348003591D8 /* N_DashTests.m */; };
 		52E40FDB1CA05348003591D8 /* N_DashUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FDA1CA05348003591D8 /* N_DashUITests.m */; };
 		52E40FEA1CA05406003591D8 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FE91CA05406003591D8 /* AppIcon.appiconset */; };
-		52E40FEE1CA05428003591D8 /* Clearview.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FEC1CA05428003591D8 /* Clearview.ttf */; };
 		52E40FEF1CA05428003591D8 /* Digital.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FED1CA05428003591D8 /* Digital.ttf */; };
 		52E40FF11CA0543E003591D8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E40FF01CA0543E003591D8 /* MapKit.framework */; };
 		52E40FFA1CA05501003591D8 /* EDSunriseSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FF31CA05501003591D8 /* EDSunriseSet.m */; };
@@ -72,7 +71,6 @@
 		52E40FDA1CA05348003591D8 /* N_DashUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = N_DashUITests.m; sourceTree = "<group>"; };
 		52E40FDC1CA05348003591D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E40FE91CA05406003591D8 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
-		52E40FEC1CA05428003591D8 /* Clearview.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Clearview.ttf; sourceTree = "<group>"; };
 		52E40FED1CA05428003591D8 /* Digital.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Digital.ttf; sourceTree = "<group>"; };
 		52E40FF01CA0543E003591D8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		52E40FF21CA05501003591D8 /* EDSunriseSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDSunriseSet.h; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 			isa = PBXGroup;
 			children = (
 				52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */,
-				52E40FEC1CA05428003591D8 /* Clearview.ttf */,
 				52E40FED1CA05428003591D8 /* Digital.ttf */,
 			);
 			name = FONTS;
@@ -340,7 +337,6 @@
 				52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */,
 				52DD98D11CA05658001C66C4 /* prefs.png in Resources */,
 				52E40FC21CA05348003591D8 /* Assets.xcassets in Resources */,
-				52E40FEE1CA05428003591D8 /* Clearview.ttf in Resources */,
 				52E40FC01CA05348003591D8 /* Main.storyboard in Resources */,
 				52DD98CA1CA05658001C66C4 /* center.png in Resources */,
 				52E40FEF1CA05428003591D8 /* Digital.ttf in Resources */,
