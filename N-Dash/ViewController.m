@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIButton       *ClockButton;
 @property (weak, nonatomic) IBOutlet UILabel        *SunLabel;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *WeatherSpinner;
+
 - (void)loadPrefernces;
 - (void)savePreferences;
 - (void)cleanInterface;
@@ -318,9 +320,10 @@
 - (void)initColorChart
 {
     _colors = [[Spectrum alloc] init];
-    _defaultLabelColor = _colors.GoldenRod;
-    _defaultSpeedColor = _colors.LEDGreen;
-    _speedWarningColor = _colors.Crimson;
+    _defaultLabelColor      = _colors.GoldenRod;
+    _defaultSpeedColor      = _colors.LEDGreen;
+    _speedWarningColor      = _colors.Crimson;
+    _WeatherSpinner.color   = _defaultLabelColor;
 }
 
 - (void)cleanInterface
@@ -1353,10 +1356,16 @@
 
 
 #pragma mark WeatherService delegate methods
+
+- (void)weatherService:(WeatherService *)service willBeginDownloadingForLocation:(CLLocation *)location
+{
+    [_WeatherSpinner startAnimating];
+}
+
 - (void)weatherService:(WeatherService *)service didUpdateForLocation:(CLLocation *)location
                celsius:(double)celsius fahrenheit:(double)fahrenheit placename:(NSString *)placename
 {
-    
+    [_WeatherSpinner stopAnimating];
     _currentTemperature = _weatherService.celsius;
     [self setTempButtonLabel:_currentTemperature];
     [_weatherService updateLocation:_currentLocation andUpdateImmediately:NO];
@@ -1377,14 +1386,14 @@
 }
 - (void)weatherService:(WeatherService *)service failedToUpdateWithError:(NSError *)error
 {
+    [_WeatherSpinner stopAnimating];
     //NSLog(@"ws failedToUpdateWithError: %@", [error localizedDescription]);
 }
 - (void)weatherService:(WeatherService *)service didBecomeInvalidWithError:(NSError *)error
 {
+    [_WeatherSpinner stopAnimating];
     //NSLog(@"ws didBecomeInvalidWithError: %@", [error localizedDescription]);
 }
-
-
 
 
 @end

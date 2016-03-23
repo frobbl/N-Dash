@@ -10,12 +10,16 @@
 
 @interface WeatherService ()
 
+
+
 - (void)beginAutoUpdating;
 - (void)cancelAutoUpdating;
 - (void)createAndRunUpdateTimer;
 - (void)weatherTimerFunction:(NSTimer *)timer;
 - (NSError *)createErrorForURLSessionDownloadFailure:(NSString *)errorDescription;
 - (NSError *)createErrorForDownloadFailureInformationMissing;
+
+
 
 @end
 
@@ -84,6 +88,10 @@ double  NIL_NUMBER              = -9999.00;
         self.fahrenheit         = NIL_NUMBER;
         self.celsius            = NIL_NUMBER;
         return;
+    }
+    
+    if (delegate) {
+        [delegate weatherService:self willBeginDownloadingForLocation:_urllocation];
     }
     
     NSString *weatherGovURL = @"http://forecast.weather.gov/MapClick.php";
