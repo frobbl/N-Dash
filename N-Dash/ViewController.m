@@ -64,6 +64,7 @@
 - (NSString *)timeUntilDateFormatted:(NSDate *)date;
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
 
+
 @property (nonatomic) BOOL                                  BOOGEYMODE;
 @property (nonatomic) double                                BOOGEYSPEED;
 
@@ -119,18 +120,13 @@
 @property (nonatomic) double                                mapViewZoomLevelLat;
 @property (nonatomic) double                                mapViewZoomLevelLon;
 
-
 @end
 
 @implementation ViewController
 
 
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     NSLog(@"View did load: ViewController");
     
