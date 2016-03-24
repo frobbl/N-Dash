@@ -13,6 +13,7 @@
 
 @protocol WeatherServiceDelegate
 
+- (void)weatherService:(WeatherService *)service willBeginDownloadingForLocation:(CLLocation *)location;
 - (void)weatherService:(WeatherService *)service didUpdateForLocation:(CLLocation *)location
                celsius:(double)celsius fahrenheit:(double)fahrenheit placename:(NSString *)placename;
 - (void)weatherService:(WeatherService *)service stationLocationDidChange:(CLLocation *)newLocation

@@ -20,10 +20,10 @@
 
 @property (nonatomic) int                                   USERDEFweatherUpdatePeriod;         // 0 : never, 1: 1 min, 2: 5 min, 3 10 min.
 
-@property (nonatomic) double                                USERDEFspeedWarningThreshold;       // in meters per second
+@property (nonatomic) double                                USERDEFspeedLimit;       // in meters per second
 @property (nonatomic) bool                                  USERDEFplaySoundOnSpeedWarning;
 
-@property (nonatomic) int                                   USERDEFDistanceUnitType;            //0 mph, 1 kmh, 2 knots
+@property (nonatomic) int                                   USERDEFDistanceUnits;            //0 mph, 1 kmh, 2 knots
 @property (nonatomic) int                                   USERDEFTemperatureUnits;            //0 fahrenheit, 1 celsius
 
 @property (nonatomic, copy) NSArray                         *UNITS_SPEED;
@@ -42,6 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"View did load: PreferencesViewController");
     
     NSString *appNameString         = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
     NSString *appVersionString      = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -66,33 +67,31 @@
     _UNITS_TEMP                         = @[@"F", @"C"];
     
     [self loadPreferences];
+    
     [self setInterface];
 }
 
 - (void)setInterface
 {
-    int speed = (int) round([self convertMetersPerSecondToSpeed:_USERDEFspeedWarningThreshold]);
+    int speed = (int) round([self convertMetersPerSecondToSpeed:_USERDEFspeedLimit]);
     [_SpeedLimitTextField setText:[NSString stringWithFormat:@"%d",speed]];
     
     [_AlertOnSpeedSwitch setOn:_USERDEFplaySoundOnSpeedWarning];
-    _SpeedLimitLabelField.text = _UNITS_SPEED[_USERDEFDistanceUnitType];
+    _SpeedLimitLabelField.text = _UNITS_SPEED[_USERDEFDistanceUnits];
     
     [_SpeedLimitTextField setEnabled:_USERDEFplaySoundOnSpeedWarning];
     [_SpeedLimitLabelField setEnabled:_USERDEFplaySoundOnSpeedWarning];
     
-    [_DistanceUnitsSelector setSelectedSegmentIndex:_USERDEFDistanceUnitType];
+    [_DistanceUnitsSelector setSelectedSegmentIndex:_USERDEFDistanceUnits];
     [_TempUnitsSelector setSelectedSegmentIndex:_USERDEFTemperatureUnits];
 }
 
 - (IBAction)SavePreferences:(id)sender {
     
     _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
-    _USERDEFspeedWarningThreshold = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
-    
-    _USERDEFDistanceUnitType = (int)_DistanceUnitsSelector.selectedSegmentIndex;
-    
+    _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
+    _USERDEFDistanceUnits = (int)_DistanceUnitsSelector.selectedSegmentIndex;
     _USERDEFTemperatureUnits = (int)_TempUnitsSelector.selectedSegmentIndex;
-    
     [self savePreferences];
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -102,7 +101,6 @@
                                bundle:NULL] instantiateViewControllerWithIdentifier:@"MainViewController"];
     
     [self presentViewController:viewController animated:NO completion:nil];
-    //commit and save here
 }
 
 - (BOOL)textField: (UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString: (NSString *)string {
@@ -114,7 +112,7 @@
     NSNumber * number = [nf numberFromString:newString];
     
     if (number) {
-        //_USERDEFspeedWarningThreshold = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
+        //_USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
         return YES;
     } else {
         return NO;
@@ -130,25 +128,23 @@
 
 - (IBAction)AlarmSwitchDidChange:(id)sender {
     
-    _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
-    
     [_SpeedLimitTextField setEnabled:[_AlertOnSpeedSwitch isOn]];
     [_SpeedLimitLabelField setEnabled:[_AlertOnSpeedSwitch isOn]];
+    
+    [self setInterface];
 }
 
 - (IBAction)DistanceUnitsClickerClicked:(id)sender {
-     _USERDEFDistanceUnitType = (int)_DistanceUnitsSelector.selectedSegmentIndex;
     [self setInterface];
 }
 
 - (IBAction)TemperatureUnitsClickerClicked:(id)sender {
-    _USERDEFTemperatureUnits = (int)_TempUnitsSelector.selectedSegmentIndex;
     [self setInterface];
 }
 
 
 - (IBAction)TemperatureRefreshClickerClicked:(id)sender {
-    _USERDEFweatherUpdatePeriod = (int)_WeatherRefreshSelector.selectedSegmentIndex;
+    
 }
 
 
@@ -156,10 +152,10 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if ([defaults integerForKey:@"USERDEFDistanceUnitType"]) {
-        _USERDEFDistanceUnitType = (int)[defaults integerForKey:@"USERDEFDistanceUnitType"];
+    if ([defaults integerForKey:@"USERDEFDistanceUnits"]) {
+        _USERDEFDistanceUnits = (int)[defaults integerForKey:@"USERDEFDistanceUnits"];
     } else {
-        //NSLog(@"USERDEFDistanceUnitType not found.");
+        //NSLog(@"USERDEFDistanceUnits not found.");
     }
     
     if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
@@ -182,11 +178,11 @@
         _USERDEFplaySoundOnSpeedWarning = false;
     }
     
-    if ([defaults doubleForKey:@"USERDEFspeedWarningThreshold"]) {
-        _USERDEFspeedWarningThreshold = (double)[defaults doubleForKey:@"USERDEFspeedWarningThreshold"];
+    if ([defaults doubleForKey:@"USERDEFspeedLimit"]) {
+        _USERDEFspeedLimit = (double)[defaults doubleForKey:@"USERDEFspeedLimit"];
     } else {
-        //NSLog(@"USERDEFspeedWarningThreshold not found.");
-        _USERDEFspeedWarningThreshold = [self convertSpeedToMetersPerSecond:90.000];
+        //NSLog(@"USERDEFspeedLimit not found.");
+        _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:90.000];
     }
 }
 
@@ -194,11 +190,12 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setInteger:_USERDEFDistanceUnitType forKey:@"USERDEFDistanceUnitType"];
+    [defaults setInteger:_USERDEFDistanceUnits forKey:@"USERDEFDistanceUnits"];
     [defaults setInteger:_USERDEFTemperatureUnits forKey:@"USERDEFTemperatureUnits"];
     [defaults setInteger:_USERDEFweatherUpdatePeriod forKey:@"USERDEFweatherUpdatePeriod"];
     [defaults setBool:_USERDEFplaySoundOnSpeedWarning forKey:@"USERDEFplaySoundOnSpeedWarning"];
-    [defaults setDouble:_USERDEFspeedWarningThreshold forKey:@"USERDEFspeedWarningThreshold"];
+    [defaults setDouble:_USERDEFspeedLimit forKey:@"USERDEFspeedLimit"];
+    
     [defaults synchronize];
 }
 
@@ -260,7 +257,7 @@
 -(double)convertMetersPerSecondToSpeed:(double)mps
 {
     double speed;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //mph
             speed = [self metersPerSecondToMilesPerHour:(mps)];
             break;
@@ -277,7 +274,7 @@
 -(double)convertSpeedToMetersPerSecond:(double)speed
 {
     double mps;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //mph
             mps = [self milesPerHourToMetersPerSecond:(speed)];
             break;
@@ -294,7 +291,7 @@
 - (double)convertMetersToDistance:(double)meters
 {
     double distance;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //miles, mph
             distance = [self metersToMiles:(meters)];
             break;
@@ -311,7 +308,7 @@
 - (double)convertDistanceToMeters:(double)distance
 {
     double meters;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //miles, mph
             meters = [self milesToMeters:(distance)];
             break;
