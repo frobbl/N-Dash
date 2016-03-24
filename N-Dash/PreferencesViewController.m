@@ -131,24 +131,31 @@
 - (IBAction)AlarmSwitchDidChange:(id)sender {
     
     _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
+    _USERDEFspeedWarningThreshold   = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
     
     [_SpeedLimitTextField setEnabled:[_AlertOnSpeedSwitch isOn]];
     [_SpeedLimitLabelField setEnabled:[_AlertOnSpeedSwitch isOn]];
+    
+    [self setInterface];
+    [self savePreferences];
 }
 
 - (IBAction)DistanceUnitsClickerClicked:(id)sender {
      _USERDEFDistanceUnitType = (int)_DistanceUnitsSelector.selectedSegmentIndex;
     [self setInterface];
+    [self savePreferences];
 }
 
 - (IBAction)TemperatureUnitsClickerClicked:(id)sender {
     _USERDEFTemperatureUnits = (int)_TempUnitsSelector.selectedSegmentIndex;
     [self setInterface];
+    [self savePreferences];
 }
 
 
 - (IBAction)TemperatureRefreshClickerClicked:(id)sender {
     _USERDEFweatherUpdatePeriod = (int)_WeatherRefreshSelector.selectedSegmentIndex;
+    [self savePreferences];
 }
 
 

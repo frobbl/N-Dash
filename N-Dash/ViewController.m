@@ -533,14 +533,17 @@
     double speed = [self convertMetersPerSecondToSpeed:mps];
     UIColor *unitColor;
     
-    if (mps >= _USERDEFspeedWarningThreshold) {
-        if (!_aboveSpeedThresholdFlag) {
-            _aboveSpeedThresholdFlag = true;
-            if (_USERDEFplaySoundOnSpeedWarning) {
+    if (_USERDEFplaySoundOnSpeedWarning) {
+        if (mps >= _USERDEFspeedWarningThreshold) {
+            if (!_aboveSpeedThresholdFlag) {
+                _aboveSpeedThresholdFlag = true;
                 [self playSpeedWarningSound];
             }
+            unitColor = _speedWarningColor;
+        } else {
+            _aboveSpeedThresholdFlag = false;
+            unitColor = _defaultSpeedColor;
         }
-        unitColor = _speedWarningColor;
     } else {
         _aboveSpeedThresholdFlag = false;
         unitColor = _defaultSpeedColor;
