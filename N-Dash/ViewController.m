@@ -69,7 +69,7 @@
 
 @property (nonatomic, strong) CLLocationManager             *locationManager;
 @property (nonatomic, strong) CLLocation                    *currentLocation;
-@property (nonatomic, strong) CLLocation                    *homeLocation;  //spot for "ddirect distance fron start" odometer
+@property (nonatomic, strong) CLLocation                    *USERDEFHomeLocation;  //spot for "ddirect distance fron start" odometer
 @property (nonatomic, strong) WeatherService                *weatherService;
 @property (nonatomic, strong) Spectrum                      *colors;
 
@@ -95,7 +95,7 @@
 @property (nonatomic) double                                currentTemperature;
 @property (nonatomic) double                                currentAltitude;
 
-@property (nonatomic) double                                USERDEFspeedWarningThreshold;      // in meters per second
+@property (nonatomic) double                                USERDEFspeedLimit;      // in meters per second
 @property (nonatomic) bool                                  USERDEFplaySoundOnSpeedWarning;
 @property (nonatomic) bool                                  aboveSpeedThresholdFlag;
 @property (nonatomic) int                                   speedWarningBeepTimeBuffer;
@@ -109,9 +109,8 @@
 @property (nonatomic) double                                odometerTripA;              // meters.
 @property (nonatomic) double                                odometerTripB;              // meters.
 
-@property (nonatomic) int                                   USERDEFDistanceUnitType;       //0 mph, 1 kmh, 2 knots
+@property (nonatomic) int                                   USERDEFDistanceUnits;       //0 mph, 1 kmh, 2 knots
 @property (nonatomic) int                                   USERDEFTemperatureUnits;      //0 fahrenheit, 1 celsius
-@property (nonatomic) int                                   altitudeUnitsState;         //0 feet from sealevel, 1 meters from sea level
 
 @property (nonatomic, copy) NSArray                         *UNITS_SPEED;
 @property (nonatomic, copy) NSArray                         *UNITS_DISTANCE;
@@ -132,6 +131,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    NSLog(@"View did load: ViewController");
+    
     _BOOGEYMODE                         = false;
     _BOOGEYSPEED                        = 29.77286;
     
@@ -144,25 +146,18 @@
     _UNITS_DISTANCE                     = @[@"Mi", @"K", @"NM"];
     _UNITS_TEMP                         = @[@"F", @"C"];
     
-    _USERDEFdropPinForWeatherStations   = false;
-    _USERDEFweatherUpdatePeriod         = 6;
-    _currentTemperature                 = -9999.00;
-    _USERDEFdisplayTemperatureInColor   = false;
     
-    _USERDEFspeedWarningThreshold       = [self convertSpeedToMetersPerSecond:90.000];
-    _USERDEFplaySoundOnSpeedWarning     = false;
+    _lastLocationName                   = [[NSMutableString alloc] init];
+    
+
+    
+
     _aboveSpeedThresholdFlag            = false;
-    
-    _USERDEFtripOdometerSelected        = 0;            // 0 = trip a, 1 = trip b.
-    
-    _mapViewZoomLevelLat                = 42.2814;      // ann arbor, mi. because why not. unused at this time anyway tho.
-    _mapViewZoomLevelLon                = -83.7483;
+    _lastSpeedWarningBeepDate           = [NSDate date];
+    _speedWarningBeepTimeBuffer         = 10;           // must wait ten seconds before beeping again.
     
     _odometerAccuracy                   = 5.000;        // must move n meters before adding to odometer variables.
     _headingAccuracy                    = 3.000;
-    
-    _lastSpeedWarningBeepDate           = [NSDate date];
-    _speedWarningBeepTimeBuffer         = 10;           // must wait ten seconds before beeping again.
     
     _appVersionNumber                   = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     _appBuildNumber                     = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
@@ -175,13 +170,15 @@
     
     [self initLocationManager];
     [self initColorChart];
+    
     [self cleanInterface];
 }
 
 
 - (void)loadPrefernces
 {
-    _lastLocationName = [[NSMutableString alloc] init];
+    
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     if ([defaults doubleForKey:@"odometerTripA"]) {
@@ -200,34 +197,23 @@
         [_lastLocationName setString:[defaults stringForKey:@"lastLocationName"]];
     }
     
-    if ([defaults integerForKey:@"USERDEFDistanceUnitType"]) {
-        _USERDEFDistanceUnitType = (int)[defaults integerForKey:@"USERDEFDistanceUnitType"];
-    }
-    
-    if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
-        _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"USERDEFTemperatureUnits"];
-    }
-    
-    if ([defaults boolForKey:@"USERDEFdisplayTemperatureInColor"]) {
-        _USERDEFdisplayTemperatureInColor = [defaults boolForKey:@"USERDEFdisplayTemperatureInColor"];
-    }
-    
-    if ([defaults integerForKey:@"altitudeUnitsState"]) {
-        _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"altitudeUnitsState"];
-    } else {
-        [defaults setInteger:_altitudeUnitsState forKey:@"altitudeUnitsState"];
-    }
     
     if ([defaults doubleForKey:@"mapViewZoomLevelLat"]) {
         _mapViewZoomLevelLat = (double)[defaults doubleForKey:@"mapViewZoomLevelLat"];
+    } else {
+        _mapViewZoomLevelLat = 42.2814;
     }
     
     if ([defaults doubleForKey:@"mapViewZoomLevelLon"]) {
         _mapViewZoomLevelLon = (double)[defaults doubleForKey:@"mapViewZoomLevelLon"];
+    } else {
+        _mapViewZoomLevelLon = -83.7483;
     }
     
     if ([defaults doubleForKey:@"currentTemperature"]) {
         _currentTemperature = (double)[defaults doubleForKey:@"currentTemperature"];
+    } else {
+        _currentTemperature = -9999.00;
     }
     
     if ([defaults doubleForKey:@"currentAltitude"]) {
@@ -238,30 +224,59 @@
     
     if ([defaults integerForKey:@"USERDEFtripOdometerSelected"]) {
         _USERDEFtripOdometerSelected = (int)[defaults integerForKey:@"USERDEFtripOdometerSelected"];
+    } else {
+        _USERDEFtripOdometerSelected = 0;
     }
     
     if ([defaults boolForKey:@"USERDEFdropPinForWeatherStations"]) {
         _USERDEFdropPinForWeatherStations = (bool)[defaults boolForKey:@"USERDEFdropPinForWeatherStations"];
+    } else {
+        _USERDEFdropPinForWeatherStations = false;
     }
     
     if ([defaults integerForKey:@"USERDEFweatherUpdatePeriod"]) {
         _USERDEFweatherUpdatePeriod = (int)[defaults integerForKey:@"USERDEFweatherUpdatePeriod"];
+    } else {
+        _USERDEFweatherUpdatePeriod = 0;
     }
     
     if ([defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"]) {
         _USERDEFplaySoundOnSpeedWarning = (bool)[defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"];
-    }
-    
-    if ([defaults doubleForKey:@"USERDEFspeedWarningThreshold"]) {
-        _USERDEFspeedWarningThreshold = (double)[defaults doubleForKey:@"USERDEFspeedWarningThreshold"];
-    }
-    
-    if ([defaults objectForKey:@"homeLocation"]) {
-        NSDictionary *userLoc=[defaults objectForKey:@"homeLocation"];
-        _homeLocation = [[CLLocation alloc] initWithLatitude:[[userLoc objectForKey:@"lat"] doubleValue] longitude:[[userLoc objectForKey:@"long"] doubleValue]];
     } else {
-        _homeLocation = nil;
+        _USERDEFplaySoundOnSpeedWarning = false;
     }
+    
+    if ([defaults doubleForKey:@"USERDEFspeedLimit"]) {
+        _USERDEFspeedLimit = (double)[defaults doubleForKey:@"USERDEFspeedLimit"];
+    } else {
+        _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:90.000];
+    }
+    
+    if ([defaults integerForKey:@"USERDEFDistanceUnits"]) {
+        _USERDEFDistanceUnits = (int)[defaults integerForKey:@"USERDEFDistanceUnits"];
+    } else {
+        _USERDEFDistanceUnits = 0;
+    }
+    
+    if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
+        _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"USERDEFTemperatureUnits"];
+    } else {
+        _USERDEFTemperatureUnits = 0;
+    }
+    
+    if ([defaults boolForKey:@"USERDEFdisplayTemperatureInColor"]) {
+        _USERDEFdisplayTemperatureInColor = [defaults boolForKey:@"USERDEFdisplayTemperatureInColor"];
+    } else {
+        _USERDEFdisplayTemperatureInColor = false;
+    }
+    
+    if ([defaults objectForKey:@"USERDEFHomeLocation"]) {
+        NSDictionary *userLoc=[defaults objectForKey:@"USERDEFHomeLocation"];
+        _USERDEFHomeLocation = [[CLLocation alloc] initWithLatitude:[[userLoc objectForKey:@"lat"] doubleValue] longitude:[[userLoc objectForKey:@"long"] doubleValue]];
+    } else {
+        _USERDEFHomeLocation = nil;
+    }
+    
 }
 
 - (void)savePreferences
@@ -270,23 +285,22 @@
     
     [defaults setDouble:_odometerTripA forKey:@"odometerTripA"];
     [defaults setDouble:_odometerTripB forKey:@"odometerTripB"];
-    [defaults setInteger:_USERDEFDistanceUnitType forKey:@"USERDEFDistanceUnitType"];
+    [defaults setInteger:_USERDEFDistanceUnits forKey:@"USERDEFDistanceUnits"];
     [defaults setInteger:_USERDEFTemperatureUnits forKey:@"USERDEFTemperatureUnits"];
     [defaults setBool:_USERDEFdisplayTemperatureInColor forKey:@"USERDEFdisplayTemperatureInColor"];
-    [defaults setInteger:_altitudeUnitsState forKey:@"altitudeUnitsState"];
     [defaults setDouble:[self mapViewZoomLevelLatitude] forKey:@"mapViewZoomLevelLat"];
     [defaults setDouble:[self mapViewZoomLevelLongitude] forKey:@"mapViewZoomLevelLon"];
     [defaults setDouble:_currentTemperature forKey:@"currentTemperature"];
     [defaults setDouble:_currentAltitude forKey:@"currentAltitude"];
     [defaults setInteger:_USERDEFweatherUpdatePeriod forKey:@"USERDEFweatherUpdatePeriod"];
     [defaults setBool:_USERDEFplaySoundOnSpeedWarning forKey:@"USERDEFplaySoundOnSpeedWarning"];
-    [defaults setDouble:_USERDEFspeedWarningThreshold forKey:@"USERDEFspeedWarningThreshold"];
+    [defaults setDouble:_USERDEFspeedLimit forKey:@"USERDEFspeedLimit"];
     [defaults setInteger:_USERDEFtripOdometerSelected forKey:@"USERDEFtripOdometerSelected"];
     
-    NSNumber *lat = [NSNumber numberWithDouble:_homeLocation.coordinate.latitude];
-    NSNumber *lon = [NSNumber numberWithDouble:_homeLocation.coordinate.longitude];
+    NSNumber *lat = [NSNumber numberWithDouble:_USERDEFHomeLocation.coordinate.latitude];
+    NSNumber *lon = [NSNumber numberWithDouble:_USERDEFHomeLocation.coordinate.longitude];
     NSDictionary *userLocation=@{@"lat":lat,@"long":lon};
-    [defaults setObject:userLocation forKey:@"homeLocation"];
+    [defaults setObject:userLocation forKey:@"USERDEFHomeLocation"];
     
     [defaults synchronize];
 }
@@ -369,8 +383,8 @@
     [self setSpeedButtonLabel:_currentMetersPerSecond];
     [self setOdometerButtonLabel:_odometerTripA metersB:_odometerTripB];
     
-    if ( _homeLocation != nil) {
-        CLLocationDistance directDistance = [_currentLocation distanceFromLocation:_homeLocation];
+    if ( _USERDEFHomeLocation != nil) {
+        CLLocationDistance directDistance = [_currentLocation distanceFromLocation:_USERDEFHomeLocation];
         [self setDirectDistanceButtonLabel:directDistance];
     }
     [self savePreferences];
@@ -434,15 +448,15 @@
 
 - (IBAction)DirectDistanceButttonClicked:(id)sender {
     if (_currentLocation != nil) {
-        _homeLocation = [_currentLocation copy];
+        _USERDEFHomeLocation = [_currentLocation copy];
     } else {
-        _homeLocation = [_locationManager.location copy];
+        _USERDEFHomeLocation = [_locationManager.location copy];
     }
     
-    CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_homeLocation];
+    CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_USERDEFHomeLocation];
     
     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:CLLocationCoordinate2DMake(_homeLocation.coordinate.latitude,_homeLocation.coordinate.longitude)];
+    [annotation setCoordinate:CLLocationCoordinate2DMake(_USERDEFHomeLocation.coordinate.latitude,_USERDEFHomeLocation.coordinate.longitude)];
     [annotation setTitle:@"N-Dash Starting Point"];
     
     [self.MapView addAnnotation:annotation];
@@ -534,7 +548,7 @@
     UIColor *unitColor;
     
     if (_USERDEFplaySoundOnSpeedWarning) {
-        if (mps >= _USERDEFspeedWarningThreshold) {
+        if (mps >= _USERDEFspeedLimit) {
             if (!_aboveSpeedThresholdFlag) {
                 _aboveSpeedThresholdFlag = true;
                 [self playSpeedWarningSound];
@@ -573,7 +587,7 @@
     _SpeedFractionLabel.attributedText = fractionString;
     
     
-    NSMutableAttributedString *unitString = [[NSMutableAttributedString alloc] initWithString:_UNITS_SPEED[_USERDEFDistanceUnitType]];
+    NSMutableAttributedString *unitString = [[NSMutableAttributedString alloc] initWithString:_UNITS_SPEED[_USERDEFDistanceUnits]];
     [unitString addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:24] range:NSMakeRange(0,[unitString length])];
     [unitString addAttribute:NSForegroundColorAttributeName value:unitColor range:NSMakeRange(0,[unitString length])];
     
@@ -632,7 +646,7 @@
     NSMutableAttributedString *altText;
     int altitude = 0;
     
-    switch (_altitudeUnitsState)
+    switch (_USERDEFDistanceUnits)
     {
         case 0: default://feet
             altitude = (int)(round(meters * 3.28084));
@@ -715,10 +729,10 @@
     [_OdometerLabel setAttributedTitle:tripLabelText forState:UIControlStateNormal];
     _OdometerLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
-    NSMutableString *odoString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%.01f %@", distance, _UNITS_DISTANCE[_USERDEFDistanceUnitType]]];
+    NSMutableString *odoString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%.01f %@", distance, _UNITS_DISTANCE[_USERDEFDistanceUnits]]];
     NSMutableAttributedString *odoText = [[NSMutableAttributedString alloc] initWithString:odoString];
     [odoText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:[odoString rangeOfString:[NSString stringWithFormat:@"%.01f", distance]]];
-    [odoText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:18] range:[odoString rangeOfString:_UNITS_DISTANCE[_USERDEFDistanceUnitType]]];
+    [odoText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:18] range:[odoString rangeOfString:_UNITS_DISTANCE[_USERDEFDistanceUnits]]];
     [odoText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[odoString length])];
 
     [_OdometerButton setAttributedTitle:odoText forState:UIControlStateNormal];
@@ -741,10 +755,10 @@
     
     _DirectDistanceLabel.attributedText = labelText;
     
-    NSMutableString *ddString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%.01f %@", distance, _UNITS_DISTANCE[_USERDEFDistanceUnitType]]];
+    NSMutableString *ddString = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%.01f %@", distance, _UNITS_DISTANCE[_USERDEFDistanceUnits]]];
     NSMutableAttributedString *ddText = [[NSMutableAttributedString alloc] initWithString:ddString];
     [ddText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:[ddString rangeOfString:[NSString stringWithFormat:@"%.01f", distance]]];
-    [ddText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:18] range:[ddString rangeOfString:_UNITS_DISTANCE[_USERDEFDistanceUnitType]]];
+    [ddText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:18] range:[ddString rangeOfString:_UNITS_DISTANCE[_USERDEFDistanceUnits]]];
     [ddText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[ddString length])];
     
     [_DirectDistanceButton setAttributedTitle:ddText forState:UIControlStateNormal];
@@ -930,16 +944,16 @@
 #pragma mark Toggle UI display units
 - (void)toggleSpeedUnitsState
 {
-    switch (_USERDEFDistanceUnitType)
+    switch (_USERDEFDistanceUnits)
     {
         case 0: default:// MPH
-            _USERDEFDistanceUnitType = 1; // now KPH
+            _USERDEFDistanceUnits = 1; // now KPH
             break;
         case 1: // KPH
-            _USERDEFDistanceUnitType = 2; // now Feet per second (FPS)
+            _USERDEFDistanceUnits = 2; // now Feet per second (FPS)
             break;
         case 2: // Knots
-            _USERDEFDistanceUnitType = 0; // now Knots per hour
+            _USERDEFDistanceUnits = 0; // now Knots per hour
             break;
             
     }
@@ -1142,7 +1156,7 @@
 -(double)convertMetersPerSecondToSpeed:(double)mps
 {
     double speed;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //mph
             speed = [self metersPerSecondToMilesPerHour:(mps)];
             break;
@@ -1159,7 +1173,7 @@
 -(double)convertSpeedToMetersPerSecond:(double)speed
 {
     double mps;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //mph
             mps = [self milesPerHourToMetersPerSecond:(speed)];
             break;
@@ -1176,7 +1190,7 @@
 - (double)convertMetersToDistance:(double)meters
 {
     double distance;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //miles, mph
             distance = [self metersToMiles:(meters)];
             break;
@@ -1193,7 +1207,7 @@
 - (double)convertDistanceToMeters:(double)distance
 {
     double meters;
-    switch(_USERDEFDistanceUnitType) {
+    switch(_USERDEFDistanceUnits) {
         case 0: default: //miles, mph
             meters = [self milesToMeters:(distance)];
             break;
@@ -1288,8 +1302,8 @@
             _odometerTripB = 0;
         }
         
-        if ( _homeLocation != nil) {
-            CLLocationDistance directDistance = [newLocation distanceFromLocation:_homeLocation];
+        if ( _USERDEFHomeLocation != nil) {
+            CLLocationDistance directDistance = [newLocation distanceFromLocation:_USERDEFHomeLocation];
             [self setDirectDistanceButtonLabel:directDistance];
         }
         
@@ -1329,11 +1343,11 @@
         
         if (_locationManager.location) {
             _currentLocation = _locationManager.location;
-            if (_homeLocation == nil) {
-                _homeLocation = [_locationManager.location copy];
+            if (_USERDEFHomeLocation == nil) {
+                _USERDEFHomeLocation = [_locationManager.location copy];
                 [self setDirectDistanceButtonLabel:0.0];
             } else {
-                CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_homeLocation];
+                CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_USERDEFHomeLocation];
                 [self setDirectDistanceButtonLabel:directDistance];
             }
         }
