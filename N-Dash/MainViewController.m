@@ -367,13 +367,17 @@
 
 - (IBAction)OpenPreferencesView:(id)sender {
     [self savePreferences];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    if (_preffy == nil) {
+        //NSLog(@"_preffy was nil");
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+        
+        PreferencesViewController *viewController =
+        [[UIStoryboard storyboardWithName:@"Main"
+                                   bundle:NULL] instantiateViewControllerWithIdentifier:@"PreferencesViewController"];
     
-    UIViewController *viewController =
-    [[UIStoryboard storyboardWithName:@"Main"
-                               bundle:NULL] instantiateViewControllerWithIdentifier:@"PreferencesViewController"];
-    
-    [self presentViewController:viewController animated:YES completion:nil];
+        _preffy = viewController;
+    }
+    [self presentViewController:_preffy animated:YES completion:nil];
 }
 
 
@@ -580,17 +584,17 @@
     double speed = [self convertMetersPerSecondToSpeed:mps];
     UIColor *unitColor;
     
+    /*
     NSLog(@"_USERDEFplaySoundOnSpeedWarning = %d, _USERDEFspeedLimit = %f (%d)",
             _USERDEFplaySoundOnSpeedWarning,
             _USERDEFspeedLimit,
             (int)(round([self convertMetersPerSecondToSpeed:_USERDEFspeedLimit])));
+    */
     
     if (_USERDEFplaySoundOnSpeedWarning == YES) {
         if (mps >= _USERDEFspeedLimit) {
             [self playSpeedWarningSound];
             unitColor = _speedWarningColor;
-            //NSLog(@"_USERDEFplaySoundOnSpeedWarning = %d", _USERDEFplaySoundOnSpeedWarning);
-            //NSLog(@"_USERDEFspeedLimit = %f (%d)", _USERDEFspeedLimit,(int)(round([self convertMetersPerSecondToSpeed:_USERDEFspeedLimit])));
         } else {
             unitColor = _defaultSpeedColor;
         }
