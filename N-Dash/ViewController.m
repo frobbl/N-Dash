@@ -64,6 +64,7 @@
 - (NSString *)timeUntilDateFormatted:(NSDate *)date;
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
 
+
 @property (nonatomic) BOOL                                  BOOGEYMODE;
 @property (nonatomic) double                                BOOGEYSPEED;
 
@@ -119,18 +120,13 @@
 @property (nonatomic) double                                mapViewZoomLevelLat;
 @property (nonatomic) double                                mapViewZoomLevelLon;
 
-
 @end
 
 @implementation ViewController
 
 
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     NSLog(@"View did load: ViewController");
     
@@ -236,8 +232,9 @@
     
     if ([defaults integerForKey:@"USERDEFweatherUpdatePeriod"]) {
         _USERDEFweatherUpdatePeriod = (int)[defaults integerForKey:@"USERDEFweatherUpdatePeriod"];
+        if (_USERDEFweatherUpdatePeriod > 3) {_USERDEFweatherUpdatePeriod = 3;}
     } else {
-        _USERDEFweatherUpdatePeriod = 0;
+        _USERDEFweatherUpdatePeriod = 3;
     }
     
     if ([defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"]) {
