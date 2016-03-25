@@ -90,24 +90,9 @@
 
 - (IBAction)SavePreferences:(id)sender {
     
-    /*
-    _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
-    _USERDEFDistanceUnits           = (int)_DistanceUnitsSelector.selectedSegmentIndex;
-    _USERDEFTemperatureUnits        = (int)_TempUnitsSelector.selectedSegmentIndex;
-    _USERDEFweatherUpdatePeriod     = (int)_WeatherRefreshSelector.selectedSegmentIndex;
-    */
-    
     _USERDEFspeedLimit              = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
-    
     [self savePreferences];
-    
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
-    UIViewController *viewController =
-    [[UIStoryboard storyboardWithName:@"Main"
-                               bundle:NULL] instantiateViewControllerWithIdentifier:@"MainViewController"];
-    
-    [self presentViewController:viewController animated:NO completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)textField: (UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString: (NSString *)string {
@@ -142,7 +127,7 @@
     [_SpeedLimitLabelField setEnabled:[_AlertOnSpeedSwitch isOn]];
     
     if (_USERDEFplaySoundOnSpeedWarning) {
-        [self playSpeedWarningSound];
+        //[self playSpeedWarningSound];
     }
     
     [self setInterface];

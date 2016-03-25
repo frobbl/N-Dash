@@ -25,10 +25,10 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -270,6 +270,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="2Rl-cN-Wnb"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -292,7 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="72.5" y="357.5"/>
+            <point key="canvasLocation" x="1727.5" y="166.5"/>
         </scene>
         <!--PreferencesViewController-->
         <scene sceneID="Xft-79-hGh">
@@ -456,6 +457,13 @@
                             <constraint firstItem="D4u-fF-xhU" firstAttribute="top" secondItem="oA3-TC-CMa" secondAttribute="bottom" constant="29" id="w4i-7S-zRD"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="tpf-H6-k1p"/>
+                    <navigationItem key="navigationItem" title="Preferences" id="RY1-5f-dBA">
+                        <barButtonItem key="backBarButtonItem" title="Backula" id="GVj-bL-UPL"/>
+                        <connections>
+                            <outlet property="titleView" destination="ZLv-BC-e5a" id="xol-wK-FSx"/>
+                        </connections>
+                    </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -470,7 +478,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X7j-dW-uqs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="474.5" y="357.5"/>
+            <point key="canvasLocation" x="2153.5" y="166.5"/>
         </scene>
     </scenes>
     <resources>
