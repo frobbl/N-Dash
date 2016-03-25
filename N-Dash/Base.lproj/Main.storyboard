@@ -116,6 +116,15 @@
                                     <action selector="DirectDistanceButttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="luR-K3-tPs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNS-6l-q7o">
+                                <rect key="frame" x="20" y="180" width="112" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Dbs-fD-gs5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HighwayGothicNarrow" family="Highway Gothic Narrow" pointSize="24"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1h-Mf-p53">
                                 <rect key="frame" x="326" y="317" width="24" height="24"/>
                                 <constraints>
@@ -129,14 +138,8 @@
                                     <action selector="CenterMapButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s1S-yJ-wq2"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MPH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQh-ov-6pb">
-                                <rect key="frame" x="305" y="101" width="56" height="21"/>
-                                <fontDescription key="fontDescription" name="HighwayGothicNarrow" family="Highway Gothic Narrow" pointSize="24"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZ6-hS-wWt">
-                                <rect key="frame" x="307" y="32" width="54" height="66"/>
+                                <rect key="frame" x="305" y="32" width="54" height="66"/>
                                 <fontDescription key="fontDescription" name="Digital-7MonoItalic" family="Digital-7" pointSize="72"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -186,10 +189,11 @@
                                     <constraint firstAttribute="height" constant="20" id="iGJ-EE-C7x"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNS-6l-q7o">
-                                <rect key="frame" x="20" y="180" width="112" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="KNOTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQh-ov-6pb">
+                                <rect key="frame" x="308" y="99" width="56" height="27"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Dbs-fD-gs5"/>
+                                    <constraint firstAttribute="height" constant="27" id="C9M-1Z-tFe"/>
+                                    <constraint firstAttribute="width" constant="56" id="sLf-Rb-CF5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HighwayGothicNarrow" family="Highway Gothic Narrow" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -200,6 +204,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="qQh-ov-6pb" secondAttribute="trailing" constant="-6" id="20o-hM-3eQ"/>
                             <constraint firstItem="LXK-MN-4j5" firstAttribute="top" secondItem="KWE-O6-x16" secondAttribute="bottom" constant="8" id="21K-Oc-ADK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vZ6-hS-wWt" secondAttribute="trailing" constant="-4" id="3iD-9M-9cs"/>
                             <constraint firstItem="Sdy-wn-wFo" firstAttribute="leading" secondItem="BMx-Sk-6d8" secondAttribute="trailing" constant="8" symbolic="YES" id="3qa-P8-Cci"/>
                             <constraint firstItem="qQh-ov-6pb" firstAttribute="top" secondItem="vZ6-hS-wWt" secondAttribute="bottom" constant="3" id="46h-87-9DR"/>
                             <constraint firstItem="ZFm-PJ-i0a" firstAttribute="leading" secondItem="xra-AM-qGT" secondAttribute="leading" id="4BE-BF-KSj"/>
@@ -220,9 +225,10 @@
                             <constraint firstItem="27y-r0-MQm" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Gau-wM-3yB"/>
                             <constraint firstItem="Sdy-wn-wFo" firstAttribute="trailing" secondItem="LXK-MN-4j5" secondAttribute="trailing" id="GwZ-Oc-64b"/>
                             <constraint firstItem="c5G-zh-7Fl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="GyU-gs-AB2"/>
+                            <constraint firstItem="qQh-ov-6pb" firstAttribute="top" secondItem="vZ6-hS-wWt" secondAttribute="bottom" constant="1" id="IqT-3O-o8Y"/>
                             <constraint firstAttribute="trailing" secondItem="D1h-Mf-p53" secondAttribute="trailing" constant="25" id="K30-yt-Qfb"/>
-                            <constraint firstItem="qQh-ov-6pb" firstAttribute="trailing" secondItem="vZ6-hS-wWt" secondAttribute="trailing" id="MhX-8k-kQw"/>
                             <constraint firstItem="N5e-df-trW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="MkX-78-max"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qQh-ov-6pb" secondAttribute="trailing" constant="-9" id="O4Z-Qy-piO"/>
                             <constraint firstItem="8Kw-WT-V3M" firstAttribute="top" secondItem="qiM-Np-98a" secondAttribute="bottom" constant="17" id="TPO-dN-cje"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="27y-r0-MQm" secondAttribute="bottom" constant="28" id="Viy-4d-s37"/>
                             <constraint firstItem="LXK-MN-4j5" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W9C-Df-fAZ"/>
@@ -258,6 +264,9 @@
                                 <exclude reference="3qa-P8-Cci"/>
                                 <exclude reference="AxA-GI-stY"/>
                                 <exclude reference="pcO-6h-Egr"/>
+                                <exclude reference="Z1y-db-URF"/>
+                                <exclude reference="20o-hM-3eQ"/>
+                                <exclude reference="46h-87-9DR"/>
                             </mask>
                         </variation>
                     </view>
