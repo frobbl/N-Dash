@@ -20,10 +20,10 @@
 
 @property (nonatomic) int                                   USERDEFweatherUpdatePeriod;         // 0 : never, 1: 1 min, 2: 5 min, 3 10 min.
 
-@property (nonatomic) double                                USERDEFspeedLimit;       // in meters per second
+@property (nonatomic) double                                USERDEFspeedLimit;                  // in meters per second
 @property (nonatomic) bool                                  USERDEFplaySoundOnSpeedWarning;
 
-@property (nonatomic) int                                   USERDEFDistanceUnits;            //0 mph, 1 kmh, 2 knots
+@property (nonatomic) int                                   USERDEFDistanceUnits;               //0 mph, 1 kmh, 2 knots
 @property (nonatomic) int                                   USERDEFTemperatureUnits;            //0 fahrenheit, 1 celsius
 
 @property (nonatomic, copy) NSArray                         *UNITS_SPEED;
@@ -88,10 +88,15 @@
 
 - (IBAction)SavePreferences:(id)sender {
     
+    /*
     _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
-    _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
-    _USERDEFDistanceUnits = (int)_DistanceUnitsSelector.selectedSegmentIndex;
-    _USERDEFTemperatureUnits = (int)_TempUnitsSelector.selectedSegmentIndex;
+    _USERDEFDistanceUnits           = (int)_DistanceUnitsSelector.selectedSegmentIndex;
+    _USERDEFTemperatureUnits        = (int)_TempUnitsSelector.selectedSegmentIndex;
+    _USERDEFweatherUpdatePeriod     = (int)_WeatherRefreshSelector.selectedSegmentIndex;
+    */
+    
+    _USERDEFspeedLimit              = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
+    
     [self savePreferences];
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -121,12 +126,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
     [textField resignFirstResponder];
     return YES;
 }
 
 
 - (IBAction)AlarmSwitchDidChange:(id)sender {
+    
+    _USERDEFplaySoundOnSpeedWarning = [_AlertOnSpeedSwitch isOn];
     
     [_SpeedLimitTextField setEnabled:[_AlertOnSpeedSwitch isOn]];
     [_SpeedLimitLabelField setEnabled:[_AlertOnSpeedSwitch isOn]];
@@ -135,16 +143,25 @@
 }
 
 - (IBAction)DistanceUnitsClickerClicked:(id)sender {
+    
+    _USERDEFDistanceUnits = (int)_DistanceUnitsSelector.selectedSegmentIndex;
+    
     [self setInterface];
 }
 
 - (IBAction)TemperatureUnitsClickerClicked:(id)sender {
+    
+    _USERDEFTemperatureUnits = (int)_TempUnitsSelector.selectedSegmentIndex;
+    
     [self setInterface];
 }
 
 
 - (IBAction)TemperatureRefreshClickerClicked:(id)sender {
     
+    _USERDEFweatherUpdatePeriod = (int)_WeatherRefreshSelector.selectedSegmentIndex;
+    
+    [self setInterface];
 }
 
 
@@ -166,9 +183,10 @@
 
     if ([defaults integerForKey:@"USERDEFweatherUpdatePeriod"]) {
         _USERDEFweatherUpdatePeriod = (int)[defaults integerForKey:@"USERDEFweatherUpdatePeriod"];
+        if (_USERDEFweatherUpdatePeriod > 3) {_USERDEFweatherUpdatePeriod = 3;}
     } else {
         //NSLog(@"USERDEFweatherUpdatePeriod not found.");
-        _USERDEFweatherUpdatePeriod = 6;
+        _USERDEFweatherUpdatePeriod = 3;
     }
     
     if ([defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"]) {
@@ -190,11 +208,11 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setInteger:_USERDEFDistanceUnits forKey:@"USERDEFDistanceUnits"];
-    [defaults setInteger:_USERDEFTemperatureUnits forKey:@"USERDEFTemperatureUnits"];
-    [defaults setInteger:_USERDEFweatherUpdatePeriod forKey:@"USERDEFweatherUpdatePeriod"];
-    [defaults setBool:_USERDEFplaySoundOnSpeedWarning forKey:@"USERDEFplaySoundOnSpeedWarning"];
-    [defaults setDouble:_USERDEFspeedLimit forKey:@"USERDEFspeedLimit"];
+    [defaults setInteger:   _USERDEFDistanceUnits           forKey:@"USERDEFDistanceUnits"];
+    [defaults setInteger:   _USERDEFTemperatureUnits        forKey:@"USERDEFTemperatureUnits"];
+    [defaults setInteger:   _USERDEFweatherUpdatePeriod     forKey:@"USERDEFweatherUpdatePeriod"];
+    [defaults setBool:      _USERDEFplaySoundOnSpeedWarning forKey:@"USERDEFplaySoundOnSpeedWarning"];
+    [defaults setDouble:    _USERDEFspeedLimit              forKey:@"USERDEFspeedLimit"];
     
     [defaults synchronize];
 }
