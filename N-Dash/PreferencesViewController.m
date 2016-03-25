@@ -84,6 +84,8 @@
     
     [_DistanceUnitsSelector setSelectedSegmentIndex:_USERDEFDistanceUnits];
     [_TempUnitsSelector setSelectedSegmentIndex:_USERDEFTemperatureUnits];
+    
+    [_WeatherRefreshSelector setSelectedSegmentIndex:_USERDEFweatherUpdatePeriod];
 }
 
 - (IBAction)SavePreferences:(id)sender {
@@ -139,6 +141,10 @@
     [_SpeedLimitTextField setEnabled:[_AlertOnSpeedSwitch isOn]];
     [_SpeedLimitLabelField setEnabled:[_AlertOnSpeedSwitch isOn]];
     
+    if (_USERDEFplaySoundOnSpeedWarning) {
+        [self playSpeedWarningSound];
+    }
+    
     [self setInterface];
 }
 
@@ -169,26 +175,6 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if ([defaults integerForKey:@"USERDEFDistanceUnits"]) {
-        _USERDEFDistanceUnits = (int)[defaults integerForKey:@"USERDEFDistanceUnits"];
-    } else {
-        //NSLog(@"USERDEFDistanceUnits not found.");
-    }
-    
-    if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
-        _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"USERDEFTemperatureUnits"];
-    } else {
-        //NSLog(@"USERDEFTemperatureUnits not found.");
-    }
-
-    if ([defaults integerForKey:@"USERDEFweatherUpdatePeriod"]) {
-        _USERDEFweatherUpdatePeriod = (int)[defaults integerForKey:@"USERDEFweatherUpdatePeriod"];
-        if (_USERDEFweatherUpdatePeriod > 3) {_USERDEFweatherUpdatePeriod = 3;}
-    } else {
-        //NSLog(@"USERDEFweatherUpdatePeriod not found.");
-        _USERDEFweatherUpdatePeriod = 3;
-    }
-    
     if ([defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"]) {
         _USERDEFplaySoundOnSpeedWarning = (bool)[defaults boolForKey:@"USERDEFplaySoundOnSpeedWarning"];
     } else {
@@ -202,17 +188,42 @@
         //NSLog(@"USERDEFspeedLimit not found.");
         _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:90.000];
     }
+    
+    
+    if ([defaults integerForKey:@"USERDEFDistanceUnits"]) {
+        _USERDEFDistanceUnits = (int)[defaults integerForKey:@"USERDEFDistanceUnits"];
+    } else {
+        //NSLog(@"USERDEFDistanceUnits not found.");
+    }
+    
+    if ([defaults integerForKey:@"USERDEFTemperatureUnits"]) {
+        _USERDEFTemperatureUnits = (int)[defaults integerForKey:@"USERDEFTemperatureUnits"];
+    } else {
+        //NSLog(@"USERDEFTemperatureUnits not found.");
+    }
+    
+
+    if ([defaults integerForKey:@"USERDEFweatherUpdatePeriod"]) {
+        _USERDEFweatherUpdatePeriod = (int)[defaults integerForKey:@"USERDEFweatherUpdatePeriod"];
+        if (_USERDEFweatherUpdatePeriod > 3) {_USERDEFweatherUpdatePeriod = 3;}
+    } else {
+        //NSLog(@"USERDEFweatherUpdatePeriod not found.");
+        _USERDEFweatherUpdatePeriod = 3;
+    }
+    
 }
 
 - (void)savePreferences
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    [defaults setInteger:   _USERDEFDistanceUnits           forKey:@"USERDEFDistanceUnits"];
-    [defaults setInteger:   _USERDEFTemperatureUnits        forKey:@"USERDEFTemperatureUnits"];
-    [defaults setInteger:   _USERDEFweatherUpdatePeriod     forKey:@"USERDEFweatherUpdatePeriod"];
     [defaults setBool:      _USERDEFplaySoundOnSpeedWarning forKey:@"USERDEFplaySoundOnSpeedWarning"];
     [defaults setDouble:    _USERDEFspeedLimit              forKey:@"USERDEFspeedLimit"];
+    
+    [defaults setInteger:   _USERDEFDistanceUnits           forKey:@"USERDEFDistanceUnits"];
+    
+    [defaults setInteger:   _USERDEFTemperatureUnits        forKey:@"USERDEFTemperatureUnits"];
+    [defaults setInteger:   _USERDEFweatherUpdatePeriod     forKey:@"USERDEFweatherUpdatePeriod"];
     
     [defaults synchronize];
 }
@@ -400,5 +411,22 @@
     return (double)nm * 1852;
 }
 
+
+
+- (void)playSpeedWarningSound
+{
+    [self playSound:@"warning" :@"wav"];
+}
+
+- (void)playSound:(NSString *)fName :(NSString *)ext
+{
+    SystemSoundID audioEffect;
+    NSString *path = [[NSBundle mainBundle] pathForResource:fName ofType:ext];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSURL *pathURL = [NSURL fileURLWithPath: path];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+        AudioServicesPlaySystemSound(audioEffect);
+    }
+}
 
 @end
