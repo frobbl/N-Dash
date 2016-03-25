@@ -130,6 +130,7 @@
     
     NSLog(@"View did load: ViewController");
     
+    
     _BOOGEYMODE                         = false;
     _BOOGEYSPEED                        = 29.77286;
     
@@ -405,14 +406,14 @@
     
     switch(_USERDEFtripOdometerSelected) {
         case 0: default:
-            label = @"Do you want to reset Trip A to zero?";
+            label = @"Do you want to reset Trip A to zero? This cannot be undone...";
             break;
         case 1:
-            label = @"Do you want to reset Trip B to zero?";
+            label = @"Do you want to reset Trip B to zero? This cannot be undone...";
             break;
     }
-    UIAlertController *myAlertController = [UIAlertController alertControllerWithTitle:label
-                                                                               message: @"This cannot be undone."
+    UIAlertController *myAlertController = [UIAlertController alertControllerWithTitle:@"Reset Trip Odometer:"
+                                                                               message:label
                                                                         preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesbutton = [UIAlertAction
@@ -444,21 +445,49 @@
 }
 
 - (IBAction)DirectDistanceButttonClicked:(id)sender {
+    
+    CLLocation *frobble;
     if (_currentLocation != nil) {
-        _USERDEFHomeLocation = [_currentLocation copy];
+        frobble = [_currentLocation copy];
     } else {
-        _USERDEFHomeLocation = [_locationManager.location copy];
+        frobble = [_locationManager.location copy];
     }
     
-    CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_USERDEFHomeLocation];
+    UIAlertController *myAlertController = [UIAlertController alertControllerWithTitle:@"Set Home Location"
+                                                                               message: @"Do you want to make the current location your home location? This cannot be undone."
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yesbutton = [UIAlertAction
+                                actionWithTitle:@"Yep"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    _USERDEFHomeLocation = frobble;
+                                    
+                                    CLLocationDistance directDistance = [_locationManager.location distanceFromLocation:_USERDEFHomeLocation];
+                                    
+                                    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                                    [annotation setCoordinate:CLLocationCoordinate2DMake(_USERDEFHomeLocation.coordinate.latitude,_USERDEFHomeLocation.coordinate.longitude)];
+                                    [annotation setTitle:@"N-Dash Starting Point"];
+                                    
+                                    [self.MapView addAnnotation:annotation];
+                                    [self setDirectDistanceButtonLabel:directDistance];
+                                    [self savePreferences];
+                                    
+                                    [myAlertController dismissViewControllerAnimated:YES completion:nil];
+                                }];
     
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:CLLocationCoordinate2DMake(_USERDEFHomeLocation.coordinate.latitude,_USERDEFHomeLocation.coordinate.longitude)];
-    [annotation setTitle:@"N-Dash Starting Point"];
+    UIAlertAction *nobutton = [UIAlertAction
+                               actionWithTitle:@"Nah"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   [myAlertController dismissViewControllerAnimated:YES completion:nil];
+                               }];
+
+    [myAlertController addAction: yesbutton];
+    [myAlertController addAction: nobutton];
+    [self presentViewController:myAlertController animated:YES completion:nil];
     
-    [self.MapView addAnnotation:annotation];
-    [self setDirectDistanceButtonLabel:directDistance];
-    [self savePreferences];
 }
 
 
