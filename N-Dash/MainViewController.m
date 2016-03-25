@@ -6,10 +6,12 @@
 //  Copyright © 2016 StimSoft LLC. All rights reserved.
 //
 
-#import "ViewController.h"
-#include "Spectrum.h"
+#import "MainViewController.h"
 
-@interface ViewController ()
+
+@interface MainViewController ()
+
+@property (weak, nonatomic) PreferencesViewController  *preffy;
 
 @property (weak, nonatomic) IBOutlet MKMapView      *MapView;
 
@@ -122,13 +124,13 @@
 
 @end
 
-@implementation ViewController
+@implementation MainViewController
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"View did load: ViewController");
+    NSLog(@"View did load: MainViewController");
     
     
     _BOOGEYMODE                         = false;
@@ -146,9 +148,7 @@
     
     _lastLocationName                   = [[NSMutableString alloc] init];
     
-
     
-
     _aboveSpeedThresholdFlag            = false;
     _lastSpeedWarningBeepDate           = [NSDate date];
     _speedWarningBeepTimeBuffer         = 10;           // must wait ten seconds before beeping again.
@@ -163,18 +163,20 @@
     _MapView.showsTraffic               = true;
     _MapView.showsScale                 = true;
     
-    [self loadPrefernces];
-    
     [self initLocationManager];
     [self initColorChart];
     
     [self cleanInterface];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"View did load: MainViewController");
+    [self loadPrefernces];
+}
 
 - (void)loadPrefernces
 {
-    
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -244,11 +246,15 @@
         _USERDEFplaySoundOnSpeedWarning = false;
     }
     
+    //NSLog(@"loading: _USERDEFplaySoundOnSpeedWarning = %d", _USERDEFplaySoundOnSpeedWarning);
+    
     if ([defaults doubleForKey:@"USERDEFspeedLimit"]) {
         _USERDEFspeedLimit = (double)[defaults doubleForKey:@"USERDEFspeedLimit"];
     } else {
         _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:90.000];
     }
+    
+    //NSLog(@"loading: _USERDEFspeedLimit = %f (%d)", _USERDEFspeedLimit, (int)(round([self convertMetersPerSecondToSpeed:_USERDEFspeedLimit])));
     
     if ([defaults integerForKey:@"USERDEFDistanceUnits"]) {
         _USERDEFDistanceUnits = (int)[defaults integerForKey:@"USERDEFDistanceUnits"];
@@ -361,12 +367,17 @@
 
 - (IBAction)OpenPreferencesView:(id)sender {
     [self savePreferences];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    UIViewController *viewController =
-    [[UIStoryboard storyboardWithName:@"Main"
-                               bundle:NULL] instantiateViewControllerWithIdentifier:@"PreferencesViewController"];
+    if (_preffy == nil) {
+        //NSLog(@"_preffy was nil");
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+        
+        PreferencesViewController *viewController =
+        [[UIStoryboard storyboardWithName:@"Main"
+                                   bundle:NULL] instantiateViewControllerWithIdentifier:@"PreferencesViewController"];
     
-    [self presentViewController:viewController animated:YES completion:nil];
+        _preffy = viewController;
+    }
+    [self presentViewController:_preffy animated:YES completion:nil];
 }
 
 
@@ -401,7 +412,7 @@
 }
 
 - (IBAction)OdomterButtonClicked:(id)sender {
-
+    
     NSString *label;
     
     switch(_USERDEFtripOdometerSelected) {
@@ -417,29 +428,29 @@
                                                                         preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesbutton = [UIAlertAction
-                         actionWithTitle:@"Yes"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             if (_USERDEFtripOdometerSelected == 0) {
-                                 _odometerTripA = 0.0;
-                             } else {
-                                 _odometerTripB = 0.0;
-                             }
-                            [myAlertController dismissViewControllerAnimated:YES completion:nil];
-                         }];
+                                actionWithTitle:@"Yes"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    if (_USERDEFtripOdometerSelected == 0) {
+                                        _odometerTripA = 0.0;
+                                    } else {
+                                        _odometerTripB = 0.0;
+                                    }
+                                    [myAlertController dismissViewControllerAnimated:YES completion:nil];
+                                }];
     UIAlertAction *nobutton = [UIAlertAction
-                         actionWithTitle:@"No"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             [myAlertController dismissViewControllerAnimated:YES completion:nil];
-                         }];
+                               actionWithTitle:@"No"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   [myAlertController dismissViewControllerAnimated:YES completion:nil];
+                               }];
     
     [myAlertController addAction: yesbutton];
     [myAlertController addAction: nobutton];
     [self presentViewController:myAlertController animated:YES completion:nil];
-        
+    
     [self setOdometerButtonLabel:_odometerTripA metersB:_odometerTripB];
     [self savePreferences];
 }
@@ -483,7 +494,7 @@
                                {
                                    [myAlertController dismissViewControllerAnimated:YES completion:nil];
                                }];
-
+    
     [myAlertController addAction: yesbutton];
     [myAlertController addAction: nobutton];
     [self presentViewController:myAlertController animated:YES completion:nil];
@@ -573,19 +584,21 @@
     double speed = [self convertMetersPerSecondToSpeed:mps];
     UIColor *unitColor;
     
-    if (_USERDEFplaySoundOnSpeedWarning) {
+    /*
+    NSLog(@"_USERDEFplaySoundOnSpeedWarning = %d, _USERDEFspeedLimit = %f (%d)",
+            _USERDEFplaySoundOnSpeedWarning,
+            _USERDEFspeedLimit,
+            (int)(round([self convertMetersPerSecondToSpeed:_USERDEFspeedLimit])));
+    */
+    
+    if (_USERDEFplaySoundOnSpeedWarning == YES) {
         if (mps >= _USERDEFspeedLimit) {
-            if (!_aboveSpeedThresholdFlag) {
-                _aboveSpeedThresholdFlag = true;
-                [self playSpeedWarningSound];
-            }
+            [self playSpeedWarningSound];
             unitColor = _speedWarningColor;
         } else {
-            _aboveSpeedThresholdFlag = false;
             unitColor = _defaultSpeedColor;
         }
     } else {
-        _aboveSpeedThresholdFlag = false;
         unitColor = _defaultSpeedColor;
     }
     
@@ -750,8 +763,8 @@
     UIFont *labelFont = [UIFont fontWithName:_LabelFont size:24];
     NSAttributedString *tripLabelText = [[NSAttributedString alloc] initWithString: [NSString stringWithFormat:@"%@",tripLetter]
                                                                         attributes: @{NSParagraphStyleAttributeName :paragraphStyle,
-                                                                                    NSFontAttributeName: labelFont,
-                                                                                    NSForegroundColorAttributeName: _defaultLabelColor}];
+                                                                                      NSFontAttributeName: labelFont,
+                                                                                      NSForegroundColorAttributeName: _defaultLabelColor}];
     [_OdometerLabel setAttributedTitle:tripLabelText forState:UIControlStateNormal];
     _OdometerLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     
@@ -760,7 +773,7 @@
     [odoText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:28] range:[odoString rangeOfString:[NSString stringWithFormat:@"%.01f", distance]]];
     [odoText addAttribute:NSFontAttributeName value:[UIFont fontWithName:_LabelFont size:18] range:[odoString rangeOfString:_UNITS_DISTANCE[_USERDEFDistanceUnits]]];
     [odoText addAttribute:NSForegroundColorAttributeName value:_defaultLabelColor range:NSMakeRange(0,[odoString length])];
-
+    
     [_OdometerButton setAttributedTitle:odoText forState:UIControlStateNormal];
     _OdometerButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 }
@@ -776,8 +789,8 @@
     UIFont *labelFont = [UIFont fontWithName:_LabelFont size:24];
     NSAttributedString *labelText = [[NSAttributedString alloc] initWithString:@"Distance:"
                                                                     attributes: @{NSParagraphStyleAttributeName :paragraphStyle,
-                                                           NSFontAttributeName: labelFont,
-                                                NSForegroundColorAttributeName: _defaultLabelColor}];
+                                                                                  NSFontAttributeName: labelFont,
+                                                                                  NSForegroundColorAttributeName: _defaultLabelColor}];
     
     _DirectDistanceLabel.attributedText = labelText;
     
@@ -793,7 +806,7 @@
 
 - (void)setLocationButtonLabel:(NSString *)location
 {
-     if ([location isEqualToString:@"..."] || [location caseInsensitiveCompare:@"Earth"] == NSOrderedSame) {
+    if ([location isEqualToString:@"..."] || [location caseInsensitiveCompare:@"Earth"] == NSOrderedSame) {
         [_LocationButton setTitle:@"Searching..." forState:UIControlStateNormal];
     } else if (![_lastLocationName isEqualToString:location]) {
         _lastLocationName = nil;
@@ -811,18 +824,18 @@
     NSDate *today = [NSDate date];
     
     EDSunriseSet *ssettoday = [[EDSunriseSet alloc] initWithDate:today timezone:[NSTimeZone systemTimeZone]
-                                                   latitude:_currentLocation.coordinate.latitude
-                                                  longitude:_currentLocation.coordinate.longitude];
+                                                        latitude:_currentLocation.coordinate.latitude
+                                                       longitude:_currentLocation.coordinate.longitude];
     EDSunriseSet *ssettomorrow = [[EDSunriseSet alloc] initWithDate:[today dateByAddingTimeInterval:60*60*24] timezone:[NSTimeZone systemTimeZone]
-                                                   latitude:_currentLocation.coordinate.latitude
-                                                  longitude:_currentLocation.coordinate.longitude];
+                                                           latitude:_currentLocation.coordinate.latitude
+                                                          longitude:_currentLocation.coordinate.longitude];
     
     if ([ssettoday sunrise] != nil) {
         if ([[NSDate date] timeIntervalSinceDate:[ssettoday sunset]] <= 0 && [[NSDate date] timeIntervalSinceDate:[ssettoday sunrise]] > 0) {
             // after sunrise but before sunset
             _SunLabel.text = [NSString stringWithFormat:@"%@ until sunset (%@)",
-                             [self timeUntilDateFormatted:[ssettoday sunset]],
-                             [self formattedStringFromDate:[ssettoday sunset]]];
+                              [self timeUntilDateFormatted:[ssettoday sunset]],
+                              [self formattedStringFromDate:[ssettoday sunset]]];
         } else if ([[NSDate date] timeIntervalSinceDate:[ssettoday sunrise]] > 0 && [[NSDate date] timeIntervalSinceDate:[ssettoday sunset]] > 0) {
             // after sunrise and after sunset, so point to sunrise tomorrow.
             _SunLabel.text = [NSString stringWithFormat:@"%@ until sunrise (%@)",
@@ -1118,7 +1131,7 @@
         case 91 ... 200:
             speedColor = _colors.RedMedium;
             break;
-
+            
         default:
             speedColor = _colors.GreenLight;
             break;
@@ -1390,10 +1403,10 @@
     if (_locationManager != nil) {
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder reverseGeocodeLocation: _locationManager.location
-                  completionHandler:^(NSArray *placemarks, NSError *error)
-                  {
-                       if (error){return;} CLPlacemark *placemark = [placemarks objectAtIndex:0]; [self setLocationButtonLabel:placemark.locality];
-                   }];
+                       completionHandler:^(NSArray *placemarks, NSError *error)
+         {
+             if (error){return;} CLPlacemark *placemark = [placemarks objectAtIndex:0]; [self setLocationButtonLabel:placemark.locality];
+         }];
     }
 }
 
@@ -1420,10 +1433,10 @@
     // Place pin for weather station location if user wants
     if (_USERDEFdropPinForWeatherStations) {
         /*
-        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-        [annotation setCoordinate:CLLocationCoordinate2DMake(newLocation.coordinate.latitude,newLocation.coordinate.longitude)];
-        [annotation setTitle:[NSString stringWithFormat:@"Weather Station %@", stationName]]; //You can set the subtitle too
-        [self.MapView addAnnotation:annotation];
+         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+         [annotation setCoordinate:CLLocationCoordinate2DMake(newLocation.coordinate.latitude,newLocation.coordinate.longitude)];
+         [annotation setTitle:[NSString stringWithFormat:@"Weather Station %@", stationName]]; //You can set the subtitle too
+         [self.MapView addAnnotation:annotation];
          */
     }
 }

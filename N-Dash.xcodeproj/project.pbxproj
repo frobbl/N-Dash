@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526E91151CA5BA0D007828F7 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E91141CA5BA0D007828F7 /* MainViewController.m */; };
 		52DD98CA1CA05658001C66C4 /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C21CA05658001C66C4 /* center.png */; };
 		52DD98CE1CA05658001C66C4 /* prefs_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C61CA05658001C66C4 /* prefs_green.png */; };
 		52DD98D01CA05658001C66C4 /* prefs_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C81CA05658001C66C4 /* prefs_white.png */; };
@@ -15,7 +16,6 @@
 		52DD98D61CA06068001C66C4 /* HWYGNRRW.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */; };
 		52E40FB71CA05348003591D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB61CA05348003591D8 /* main.m */; };
 		52E40FBA1CA05348003591D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB91CA05348003591D8 /* AppDelegate.m */; };
-		52E40FBD1CA05348003591D8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FBC1CA05348003591D8 /* ViewController.m */; };
 		52E40FC01CA05348003591D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FBE1CA05348003591D8 /* Main.storyboard */; };
 		52E40FC21CA05348003591D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FC11CA05348003591D8 /* Assets.xcassets */; };
 		52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */; };
@@ -48,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		526E91131CA5BA0D007828F7 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		526E91141CA5BA0D007828F7 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		52DD98C21CA05658001C66C4 /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
 		52DD98C61CA05658001C66C4 /* prefs_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_green.png; sourceTree = "<group>"; };
 		52DD98C81CA05658001C66C4 /* prefs_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_white.png; sourceTree = "<group>"; };
@@ -58,8 +60,6 @@
 		52E40FB61CA05348003591D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		52E40FB81CA05348003591D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		52E40FB91CA05348003591D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		52E40FBB1CA05348003591D8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		52E40FBC1CA05348003591D8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		52E40FBF1CA05348003591D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52E40FC11CA05348003591D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52E40FC41CA05348003591D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 			children = (
 				52E40FB81CA05348003591D8 /* AppDelegate.h */,
 				52E40FB91CA05348003591D8 /* AppDelegate.m */,
-				52E40FBB1CA05348003591D8 /* ViewController.h */,
-				52E40FBC1CA05348003591D8 /* ViewController.m */,
+				526E91131CA5BA0D007828F7 /* MainViewController.h */,
+				526E91141CA5BA0D007828F7 /* MainViewController.m */,
 				52E40FF41CA05501003591D8 /* PreferencesViewController.h */,
 				52E40FF51CA05501003591D8 /* PreferencesViewController.m */,
 				52E40FF21CA05501003591D8 /* EDSunriseSet.h */,
@@ -365,10 +365,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				52E40FFC1CA05501003591D8 /* Spectrum.m in Sources */,
-				52E40FBD1CA05348003591D8 /* ViewController.m in Sources */,
 				52E40FBA1CA05348003591D8 /* AppDelegate.m in Sources */,
 				52E40FFD1CA05501003591D8 /* WeatherService.m in Sources */,
 				52E40FFB1CA05501003591D8 /* PreferencesViewController.m in Sources */,
+				526E91151CA5BA0D007828F7 /* MainViewController.m in Sources */,
 				52E40FB71CA05348003591D8 /* main.m in Sources */,
 				52E40FFA1CA05501003591D8 /* EDSunriseSet.m in Sources */,
 			);
