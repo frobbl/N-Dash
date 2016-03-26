@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"View did load: PreferencesViewController");
+    //NSLog(@"View did load: PreferencesViewController");
     
     NSString *appNameString         = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleNameKey];
     NSString *appVersionString      = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
