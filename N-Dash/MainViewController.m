@@ -130,7 +130,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"View did load: MainViewController");
+    //NSLog(@"View did load: MainViewController");
     
     
     _BOOGEYMODE                         = false;
@@ -171,7 +171,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"View did load: MainViewController");
+    //NSLog(@"View did load: MainViewController");
     [self loadPrefernces];
 }
 

@@ -10,5 +10,11 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface PreferencesViewController : UIViewController <UITextFieldDelegate>
+{
+    
+}
+
+-(IBAction)backGroundTap:(id)sender;
+
 
 @end
