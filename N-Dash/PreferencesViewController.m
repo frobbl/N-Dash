@@ -111,6 +111,12 @@
     }
 }
 
+
+-(IBAction)backGroundTap:(id)sender
+{
+    [_SpeedLimitTextField resignFirstResponder];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     _USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
