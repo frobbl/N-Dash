@@ -16,9 +16,9 @@
 - (void)cancelAutoUpdating;
 - (void)createAndRunUpdateTimer;
 - (void)weatherTimerFunction:(NSTimer *)timer;
+- (void)weatherTimerTimedOutFunction:(NSTimer *)timer;
 - (NSError *)createErrorForURLSessionDownloadFailure:(NSString *)errorDescription;
 - (NSError *)createErrorForDownloadFailureInformationMissing;
-
 
 
 @end
@@ -26,10 +26,11 @@
 @implementation WeatherService
 
 
-int     SSrequestTimeout        = 15;  // for URL download sessions
-int     SSresourceTimeout       = 30; // for URL download sessions
-int     SSmaxConnections        = 3;   // for URL download sessions
-double  NIL_NUMBER              = -9999.00;
+int             SSrequestTimeout        = 15.000;  // for URL download sessions
+int             SSresourceTimeout       = 10.000;  // for URL download sessions
+int             SSmaxConnections        = 3;       // for URL download sessions
+double          NIL_NUMBER              = -9999.00;
+bool            isupdating              = false;
 
 @synthesize delegate;
 
@@ -42,6 +43,7 @@ double  NIL_NUMBER              = -9999.00;
 @synthesize weatherurl          = _weatherurl;
 @synthesize METAR               = _METAR;
 @synthesize updateinterval      = _updateinterval;
+@synthesize timeoutinterval     = _timeoutinterval;
 
 
 #pragma PUBLIC FUNCTIONS
@@ -54,6 +56,7 @@ double  NIL_NUMBER              = -9999.00;
         self.placename          = nil;
         self.urllocation        = nil;
         self.updateinterval     = 0;
+        self.timeoutinterval    = 15.000;
     }
     return self;
 }
@@ -77,6 +80,13 @@ double  NIL_NUMBER              = -9999.00;
 - (void)updateWeather
 {
     //NSLog(@"updateWeather (self.updateinterval: %f, self.autoupdates: %i)",self.updateinterval,self.autoupdates);
+    
+    if (isupdating) {
+        return;
+    } else {
+        isupdating = true;
+    }
+    
     if (self.urllocation == nil) {
         //NSLog(@"self.urllocation == nil");
         NSError *error = [self createErrorForDownloadFailureInformationMissing];
@@ -108,12 +118,12 @@ double  NIL_NUMBER              = -9999.00;
     sessionConfig.timeoutIntervalForResource = SSresourceTimeout;
     sessionConfig.HTTPMaximumConnectionsPerHost = SSmaxConnections;
     
-    NSURLSession *weatherSession = [NSURLSession sessionWithConfiguration:sessionConfig
+    self.weatherSession = [NSURLSession sessionWithConfiguration:sessionConfig
                                                                  delegate:self
                                                             delegateQueue:nil];
-    if (weatherSession) {
-        NSURLSessionDownloadTask *downloadTask = [weatherSession downloadTaskWithURL:weatherURL];
-        [downloadTask resume];
+    if (self.weatherSession) {
+        self.weatherDownloadTask = [self.weatherSession downloadTaskWithURL:weatherURL];
+        [self.weatherDownloadTask resume];
     }
 }
 
@@ -171,6 +181,28 @@ double  NIL_NUMBER              = -9999.00;
                                                  userInfo:nil
                                                   repeats:NO];
     [[NSRunLoop mainRunLoop] addTimer:updateTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)createAndRunTimeoutTimer
+{
+    NSTimer *timeoutTimer = [NSTimer timerWithTimeInterval:self.timeoutinterval
+                                                   target:self
+                                                 selector:@selector(weatherTimerTimedOutFunction:)
+                                                 userInfo:nil
+                                                  repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:timeoutTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)weatherTimerTimedOutFunction:(NSTimer *)timer
+{
+    [self.weatherSession finishTasksAndInvalidate];
+    isupdating = false;
+    
+    if (self.delegate) {
+        dispatch_async(dispatch_get_main_queue(),^(void){
+            [delegate weatherServicedidTimeoutWithLocalTimer:self];
+        });
+    }
 }
 
 - (void)weatherTimerFunction:(NSTimer *)timer
@@ -259,7 +291,6 @@ double  NIL_NUMBER              = -9999.00;
                                 [delegate weatherService:self stationLocationDidChange:newloc oldLocation:oldloc stationName:_METAR];
                             });
                         }
-                    } else {
                     }
                 }
             }
@@ -277,16 +308,28 @@ double  NIL_NUMBER              = -9999.00;
     }
     
     [session finishTasksAndInvalidate];
+    isupdating = false;
 }
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error
 {
     if (error) {
-        //NSLog(@"URLSession failed: %@",[error localizedDescription]);
-        NSError *myError = [self createErrorForURLSessionDownloadFailure:[error localizedDescription]];
-        [delegate weatherService:self failedToUpdateWithError:myError];
-        [session finishTasksAndInvalidate];
+        if (self.delegate) {
+            dispatch_async(dispatch_get_main_queue(),^(void){
+                NSError *myError = [self createErrorForURLSessionDownloadFailure:[error localizedDescription]];
+                [delegate weatherService:self failedToUpdateWithError:myError];
+            });
+        }
+    } else {
+        if (self.delegate) {
+            dispatch_async(dispatch_get_main_queue(),^(void){
+                [delegate weatherServicedidBecomeInvalidWithNoError:self];
+            });
+        }
     }
+    
+    [session finishTasksAndInvalidate];
+    isupdating = false;
 }
 
 

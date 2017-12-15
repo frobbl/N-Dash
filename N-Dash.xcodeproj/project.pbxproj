@@ -3,22 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523A7BDD1F794F1800EE8DE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FBE1CA05348003591D8 /* Main.storyboard */; };
 		526E91151CA5BA0D007828F7 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E91141CA5BA0D007828F7 /* MainViewController.m */; };
+		52CAADBA1FACC1CF00E04E1A /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52CAADB91FACC1CF00E04E1A /* Launch.storyboard */; };
 		52DD98CA1CA05658001C66C4 /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C21CA05658001C66C4 /* center.png */; };
 		52DD98CE1CA05658001C66C4 /* prefs_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C61CA05658001C66C4 /* prefs_green.png */; };
 		52DD98D01CA05658001C66C4 /* prefs_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C81CA05658001C66C4 /* prefs_white.png */; };
 		52DD98D11CA05658001C66C4 /* prefs.png in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98C91CA05658001C66C4 /* prefs.png */; };
 		52DD98D41CA0566B001C66C4 /* warning.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D31CA0566B001C66C4 /* warning.wav */; };
-		52DD98D61CA06068001C66C4 /* HWYGNRRW.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */; };
+		52DD98D61CA06068001C66C4 /* Highway.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52DD98D51CA06068001C66C4 /* Highway.ttf */; };
 		52E40FB71CA05348003591D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB61CA05348003591D8 /* main.m */; };
 		52E40FBA1CA05348003591D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FB91CA05348003591D8 /* AppDelegate.m */; };
-		52E40FC01CA05348003591D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FBE1CA05348003591D8 /* Main.storyboard */; };
 		52E40FC21CA05348003591D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FC11CA05348003591D8 /* Assets.xcassets */; };
-		52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */; };
 		52E40FD01CA05348003591D8 /* N_DashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FCF1CA05348003591D8 /* N_DashTests.m */; };
 		52E40FDB1CA05348003591D8 /* N_DashUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E40FDA1CA05348003591D8 /* N_DashUITests.m */; };
 		52E40FEA1CA05406003591D8 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 52E40FE91CA05406003591D8 /* AppIcon.appiconset */; };
@@ -50,19 +50,19 @@
 /* Begin PBXFileReference section */
 		526E91131CA5BA0D007828F7 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		526E91141CA5BA0D007828F7 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		52CAADB91FACC1CF00E04E1A /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		52DD98C21CA05658001C66C4 /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
 		52DD98C61CA05658001C66C4 /* prefs_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_green.png; sourceTree = "<group>"; };
 		52DD98C81CA05658001C66C4 /* prefs_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs_white.png; sourceTree = "<group>"; };
 		52DD98C91CA05658001C66C4 /* prefs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefs.png; sourceTree = "<group>"; };
 		52DD98D31CA0566B001C66C4 /* warning.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = warning.wav; sourceTree = "<group>"; };
-		52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = HWYGNRRW.TTF; sourceTree = "<group>"; };
+		52DD98D51CA06068001C66C4 /* Highway.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Highway.ttf; sourceTree = "<group>"; };
 		52E40FB21CA05348003591D8 /* N-Dash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "N-Dash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40FB61CA05348003591D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		52E40FB81CA05348003591D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		52E40FB91CA05348003591D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		52E40FBF1CA05348003591D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52E40FC11CA05348003591D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		52E40FC41CA05348003591D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52E40FC61CA05348003591D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52E40FCB1CA05348003591D8 /* N-DashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "N-DashTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E40FCF1CA05348003591D8 /* N_DashTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = N_DashTests.m; sourceTree = "<group>"; };
@@ -166,8 +166,8 @@
 				52E40FF91CA05501003591D8 /* WeatherService.m */,
 				52E40FE81CA053E0003591D8 /* Resources */,
 				52E40FBE1CA05348003591D8 /* Main.storyboard */,
+				52CAADB91FACC1CF00E04E1A /* Launch.storyboard */,
 				52E40FC11CA05348003591D8 /* Assets.xcassets */,
-				52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */,
 				52E40FC61CA05348003591D8 /* Info.plist */,
 				52E40FB51CA05348003591D8 /* Supporting Files */,
 			);
@@ -214,7 +214,7 @@
 		52E40FEB1CA05418003591D8 /* FONTS */ = {
 			isa = PBXGroup;
 			children = (
-				52DD98D51CA06068001C66C4 /* HWYGNRRW.TTF */,
+				52DD98D51CA06068001C66C4 /* Highway.ttf */,
 				52E40FED1CA05428003591D8 /* Digital.ttf */,
 			);
 			name = FONTS;
@@ -282,12 +282,11 @@
 		52E40FAA1CA05348003591D8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "StimpSoft, Inc.™ LLC";
 				TargetAttributes = {
 					52E40FB11CA05348003591D8 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 37VX9KSYDJ;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -305,7 +304,7 @@
 				};
 			};
 			buildConfigurationList = 52E40FAD1CA05348003591D8 /* Build configuration list for PBXProject "N-Dash" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -329,15 +328,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52DD98D61CA06068001C66C4 /* HWYGNRRW.TTF in Resources */,
+				52DD98D61CA06068001C66C4 /* Highway.ttf in Resources */,
+				523A7BDD1F794F1800EE8DE6 /* Main.storyboard in Resources */,
 				52DD98CE1CA05658001C66C4 /* prefs_green.png in Resources */,
 				52DD98D41CA0566B001C66C4 /* warning.wav in Resources */,
 				52E40FEA1CA05406003591D8 /* AppIcon.appiconset in Resources */,
 				52DD98D01CA05658001C66C4 /* prefs_white.png in Resources */,
-				52E40FC51CA05348003591D8 /* LaunchScreen.storyboard in Resources */,
 				52DD98D11CA05658001C66C4 /* prefs.png in Resources */,
 				52E40FC21CA05348003591D8 /* Assets.xcassets in Resources */,
-				52E40FC01CA05348003591D8 /* Main.storyboard in Resources */,
+				52CAADBA1FACC1CF00E04E1A /* Launch.storyboard in Resources */,
 				52DD98CA1CA05658001C66C4 /* center.png in Resources */,
 				52E40FEF1CA05428003591D8 /* Digital.ttf in Resources */,
 			);
@@ -414,14 +413,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		52E40FC31CA05348003591D8 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				52E40FC41CA05348003591D8 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -433,13 +424,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -461,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -476,13 +475,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -498,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -510,8 +517,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 37VX9KSYDJ;
 				INFOPLIST_FILE = "N-Dash/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "frobble.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -523,8 +531,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 37VX9KSYDJ;
 				INFOPLIST_FILE = "N-Dash/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "frobble.N-Dash";
 				PRODUCT_NAME = "$(TARGET_NAME)";
