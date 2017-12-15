@@ -11,26 +11,27 @@
 
 @interface MainViewController ()
 
-@property (weak, nonatomic) PreferencesViewController  *preffy;
+@property (weak, nonatomic) PreferencesViewController           *preffy;
 
-@property (weak, nonatomic) IBOutlet MKMapView      *MapView;
+@property (weak, nonatomic) IBOutlet MKMapView                  *MapView;
 
-@property (weak, nonatomic) IBOutlet UIButton       *SpeedButton;
-@property (weak, nonatomic) IBOutlet UILabel        *SpeedFractionLabel;
-@property (weak, nonatomic) IBOutlet UILabel        *SpeedUnitsLabel;
+@property (weak, nonatomic) IBOutlet UIButton                   *SpeedButton;
+@property (weak, nonatomic) IBOutlet UILabel                    *SpeedFractionLabel;
+@property (weak, nonatomic) IBOutlet UILabel                    *SpeedUnitsLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton       *TempButton;
-@property (weak, nonatomic) IBOutlet UIButton       *AltitudeButton;
-@property (weak, nonatomic) IBOutlet UIButton       *HeadingButton;
-@property (weak, nonatomic) IBOutlet UIButton       *OdometerLabel;
-@property (weak, nonatomic) IBOutlet UIButton       *OdometerButton;
-@property (weak, nonatomic) IBOutlet UIButton       *DirectDistanceButton;
-@property (weak, nonatomic) IBOutlet UILabel        *DirectDistanceLabel;
-@property (weak, nonatomic) IBOutlet UIButton       *LocationButton;
-@property (weak, nonatomic) IBOutlet UIButton       *ClockButton;
-@property (weak, nonatomic) IBOutlet UILabel        *SunLabel;
+@property (weak, nonatomic) IBOutlet UIButton                   *TempButton;
+@property (weak, nonatomic) IBOutlet UIButton                   *AltitudeButton;
+@property (weak, nonatomic) IBOutlet UIButton                   *HeadingButton;
+@property (weak, nonatomic) IBOutlet UIButton                   *OdometerLabel;
+@property (weak, nonatomic) IBOutlet UIButton                   *OdometerButton;
+@property (weak, nonatomic) IBOutlet UIButton                   *DirectDistanceButton;
+@property (weak, nonatomic) IBOutlet UILabel                    *DirectDistanceLabel;
+@property (weak, nonatomic) IBOutlet UIButton                   *LocationButton;
+@property (weak, nonatomic) IBOutlet UIButton                   *ClockButton;
+@property (weak, nonatomic) IBOutlet UILabel                    *SunLabel;
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *WeatherSpinner;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView    *WeatherSpinner;
+@property (weak, nonatomic) IBOutlet UILabel                    *WeatherSessionKilledLabel;
 
 - (void)loadPrefernces;
 - (void)savePreferences;
@@ -136,7 +137,7 @@
     _BOOGEYMODE                         = false;
     _BOOGEYSPEED                        = 29.77286;
     
-    _LEDFont                            = @"Digital-7";
+    _LEDFont                            = @"Digital-7 Mono";
     _LabelFont                          = @"Highway Gothic Narrow";
     _SansFont                           = @"Helvetica";
     _SansItalic                         = @"Helvetica-Italic";
@@ -355,6 +356,7 @@
     [self setTempButtonLabel:_currentTemperature];
     [_LocationButton setTitle:@"" forState:UIControlStateNormal];
     _SunLabel.text = @"";
+    _WeatherSessionKilledLabel.text = @"";
     [self setClockButtonLabel];
     [self setSunLabel];
 }
@@ -1415,6 +1417,7 @@
 
 - (void)weatherService:(WeatherService *)service willBeginDownloadingForLocation:(CLLocation *)location
 {
+    _WeatherSessionKilledLabel.text = @"";
     [_WeatherSpinner startAnimating];
 }
 
@@ -1449,6 +1452,17 @@
 {
     [_WeatherSpinner stopAnimating];
     //NSLog(@"ws didBecomeInvalidWithError: %@", [error localizedDescription]);
+}
+
+- (void)weatherServicedidBecomeInvalidWithNoError:(WeatherService *)service
+{
+    [_WeatherSpinner stopAnimating];
+}
+
+-(void) weatherServicedidTimeoutWithLocalTimer:(WeatherService *)service
+{
+    [_WeatherSpinner stopAnimating];
+    _WeatherSessionKilledLabel.text = @" ! ";
 }
 
 

@@ -20,6 +20,8 @@
            oldLocation:(CLLocation *)oldLocation stationName:(NSString *)stationName;
 - (void)weatherService:(WeatherService *)service failedToUpdateWithError:(NSError *)error;
 - (void)weatherService:(WeatherService *)service didBecomeInvalidWithError:(NSError *)error;
+- (void)weatherServicedidTimeoutWithLocalTimer:(WeatherService *)service;
+- (void)weatherServicedidBecomeInvalidWithNoError:(WeatherService *)service;
 
 @end
 
@@ -35,15 +37,20 @@
 
 @property (nonatomic, assign) id  delegate;
 
-@property (nonatomic, copy)     CLLocation *urllocation;
-@property (nonatomic, copy)     CLLocation *stlocation;
-@property (nonatomic, copy)     NSMutableString *weatherurl;
-@property (nonatomic, copy)     NSMutableString *placename;
-@property (nonatomic, copy)     NSMutableString *METAR;
+@property (nonatomic, copy)     CLLocation                  *urllocation;
+@property (nonatomic, copy)     CLLocation                  *stlocation;
+@property (nonatomic, copy)     NSMutableString             *weatherurl;
+@property (nonatomic, copy)     NSMutableString             *placename;
+@property (nonatomic, copy)     NSMutableString             *METAR;
+
+@property (nonatomic,strong)    NSURLSession                *weatherSession;
+@property (nonatomic,strong)    NSURLSessionDownloadTask    *weatherDownloadTask;
+
 @property (nonatomic) double    celsius;
 @property (nonatomic) double    fahrenheit;
 @property (nonatomic) int       elevation;
 @property (nonatomic) double    updateinterval;
+@property (nonatomic) double    timeoutinterval;
 @property (nonatomic) BOOL      autoupdates;
 
 @end

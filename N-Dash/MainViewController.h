@@ -12,7 +12,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "WeatherService.h"
 #import "EDSunriseSet.h"
-#import "SPectrum.h"
+#import "Spectrum.h"
 #import "PreferencesViewController.h"
 
 @interface MainViewController : UIViewController <WeatherServiceDelegate,CLLocationManagerDelegate>

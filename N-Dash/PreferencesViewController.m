@@ -97,18 +97,23 @@
 
 - (BOOL)textField: (UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString: (NSString *)string {
     
+    /*
+     
+     numpad is on so, meh.
+     
     NSNumberFormatter * nf = [[NSNumberFormatter alloc] init];
     [nf setNumberStyle:NSNumberFormatterNoStyle];
     
-    NSString * newString = [NSString stringWithFormat:@"%@%@",textField.text,string];
-    NSNumber * number = [nf numberFromString:newString];
+    NSNumber *number = [nf [NSString stringWithFormat:@"%@%@",textField.text,string]];
     
     if (number) {
-        //_USERDEFspeedLimit = [self convertSpeedToMetersPerSecond:[_SpeedLimitTextField.text doubleValue]];
         return YES;
     } else {
         return NO;
     }
+    */
+    
+    return YES;
 }
 
 
